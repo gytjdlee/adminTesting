@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      .nav {
+        height: 70px;
+        border-bottom: 1px solid black;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-right-items {
+        display: flex;
+        margin-left: auto;
+        margin-right: 30px;
+      }
+
+      .nav-item {
+        margin-left: 10px;
+      }
+
+      .title{
+        fint-size: 5.5rem;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .nav-title{
+        margin-left: 30px;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 300;
+      }
+
+      .main {
+        width: 800px;
+        margin: 0 auto;
+        margin-top: 60px;
+      }
+
+      .prices-item {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        margin: 20px;
+        border-radius: 4px;
+      }
+
+      .prices{
+        display: flex;
+      }
+
+      .price-item-title{
+        margin:5px;
+        text-align: center;
+        font-size: 1.25rem;
+      }
+
+      .price-item-price{
+        margin:5px;
+        text-align: center;
+        font-size: 1.25rem;
+      }
+
+      .price-item-detail{
+
+      }
+    </style>
+  </head>
+  <body>
+    <script src="script.js"></script>
+    <div class="nav">
+      <div class="nav-title">
+       {{ message }}
+      </div>
+      <div class="nav-right-items">
+        <div class="nav-item">메뉴1</div>
+        <div class="nav-item">메뉴2</div>
+        <div class="nav-item">메뉴3</div>
+        <div class="nav-item">메뉴4</div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="title">
+        Pricing
+      </div>
+      <div class="subtitle">
+        Quickly build an effective pricing table for your potential
+        customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.
+      </div>
+      <div class="prices">
+        <div class="prices-item">
+          <div class="price-item-title">
+            Free
+          </div>
+          <div class="price-item-price">
+            $0 / mo
+          </div>
+          <div class="price-item-detail">
+            프라이스 1
+          </div>
+        </div>
+        <div class="prices-item">
+          <div class="price-item-title">
+            Pro
+          </div>
+          <div class="price-item-price">
+            $5 / mo
+          </div>
+          <div class="price-item-detail">
+            프라이스 2
+          </div>
+        </div>
+        <div class="prices-item">
+          <div class="price-item-title">
+            Enterprise
+          </div>
+          <div class="price-item-price">
+            $10 / mo
+          </div>
+          <div class="price-item-detail">
+            프라이스 3
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

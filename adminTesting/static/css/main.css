@@ -1,0 +1,27 @@
+.amain_top {
+	border-bottom: 1px solid;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	height: 120px;
+	padding: 1rem;
+	color: white;
+	background: white;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.amain_middle {
+	height: 550px;
+	padding: 1rem;
+	background: #EAEAEA;
+	align-items: center;
+	margin-top: 60px;
+}
+
+.main_bottom {
+    align-items: center;
+}

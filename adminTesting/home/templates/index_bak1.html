@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title></head>
+<body>
+<style type="text/css">
+     .tg {border-collapse:collapse;border-spacing:0;}
+     .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+     .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+     .tg .tg-21xh{font-weight:bold;background-color:#34cdf9;color:#333333;border-color:inherit;text-align:left;vertical-align:top}
+     .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+    <tr>
+        <th class="tg-21xh"> 코드</th>
+        <th class="tg-21xh"> 타입</th>
+        <th class="tg-21xh"> 질문</th>
+        <th class="tg-21xh"> 답변</th>
+    </tr>
+    {% for faq in faqs %}
+    <tr>
+        <td>{{ faq.faq_id }}</td>
+        <td>{{ faq.faq_type }}</td>
+        <td>{{ faq.faq_question }}</td>
+        <td>{{ faq.faq_answer }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

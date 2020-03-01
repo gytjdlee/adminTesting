@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+
+      .nav {
+        border-bottom: 1px solid black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        height: 35px;
+        padding: 1rem;
+        color: white;
+        background: black;
+        font-weight: navy;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-right-items {
+        display: flex;
+        margin-left: auto;
+        margin-right: 30px;
+      }
+
+      .nav-item {
+        margin-left: 10px;
+      }
+
+      .nav-title {
+        margin-left: 30px;
+      }
+
+      .main-title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.25rem;
+      }
+
+      .sub-title {
+        text-align: center;
+        font-size: 1.25rem;
+      }
+
+      .main {
+        width: 800px;
+        margin: 0 auto;
+        margin-top: 85px;
+      }
+
+      .sub-main {
+        margin-top: 30px;
+        align-items: center;
+        vertical-align: middle;
+      }
+
+      .board {
+        text-align: center;
+        width: 800px;
+        margin-top: 20px;
+      }
+
+	  .tg {
+		border-collapse:collapse;
+		border-spacing:0;
+	  }
+
+      .tg td{
+		font-family:Arial, sans-serif;
+		font-size:14px;
+		padding:10px 5px;
+		border-style:solid;
+		border-width:1px;
+		overflow:hidden;
+		word-break:normal;
+		border-color:black;
+	  }
+
+      .tg th {
+		font-family:Arial, sans-serif;
+		font-size:14px;
+		font-weight:bold;
+		padding:10px 5px;
+		border-style:solid;
+		border-width:1px;
+		overflow:hidden;word-break:normal;
+		border-color:black;
+	  }
+
+      .tg .tg-code{
+		font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
+	    width: 100px;
+	  }
+
+      .tg .tg-type{
+		font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
+	    width: 50px;
+	  }
+
+      .tg .tg-question{
+		font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
+	    width: 600px;
+	  }
+
+      .tg .tg-answer{
+		font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
+	    width: 50px;
+	  }
+
+    </style>
+  </head>
+  <body>
+    <script src="script.js"></script>
+    <div class="nav">
+      <div class="nav-title">
+       <!-- {{ message }} -->
+          <h1> 췍. Test Page 입니다.</h1>
+      </div>
+      <div class="nav-right-items">
+        <div class="nav-item">메뉴1</div>
+        <div class="nav-item">메뉴2</div>
+        <div class="nav-item">메뉴3</div>
+        <div class="nav-item">메뉴4</div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="main-title">
+        This is main message.
+      </div>
+
+      <div class="sub-title">
+        sub title message.
+      </div>
+
+      <div class="sub-main">
+        <div class="board">
+		<table class="tg">
+		<tr>
+		<th class="tg-code"> 코드</th>
+		<th class="tg-type"> 타입</th>
+		<th class="tg-question"> 질문</th>
+		<th class="tg-answer"> 답변</th>
+		</tr>
+		{% for faq in faqs %}
+		<tr>
+		<td>{{ faq.faq_id }}</td>
+		<td>{{ faq.faq_type }}</td>
+		<td>{{ faq.faq_question }}</td>
+		<td>{{ faq.faq_answer }}</td>
+	    </tr>
+	    {% endfor %}
+      </div>
+    </div>
+
+  </body>
+</html>
