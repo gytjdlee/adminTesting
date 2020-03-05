@@ -1,12 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+{% load static %}
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% load static %}
-    <script src="{% static 'js/intro.js' %}" type="text/javascript"></script>
+
+    <meta charset="utf-8">
+    <meta name="description" content="로그인 페이지 입니다.">
+    <title>로그인 메인 페이지</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 </head>
 <body>
-test
+
+	<div class="main_top" align="center">
+        <!--<h1><a href="/main">TMON 로그인 페이지</a></h1>-->
+        <!--<h1><a href="/main">TMON 로그인 페이지</a><br>-->
+        <a href="/main"><img src="{% static 'image/tmon.jpg' %}"></a>
+	</div>
+
+    <div class="main_middle">
+
+        <h2 class="membership_title">로그인</h2>
+        <p class="membership_desc">로그인 페이지입니다.</p>
+
+        <div class="main_login">
+
+        <!--<form name="login" action="/member/auth1" method="post">-->
+        <form name="login" method="post" class="post-form">
+
+            <input type="hidden" name="return_url" value="/">
+            <input type="hidden" name="id_save" id="id_save" value="">
+            <input type="hidden" name="install_nos" id="install_nos" value="">
+            <input type="hidden" name="ts" value="1581226278" />
+            <input type="hidden" id="auth_id" name="id" />
+            <input type="hidden" id="auth_password" name="password" />
+            <fieldset class="log_in" style="padding-bottom: 5px !important">
+                <ul class="spc_form">
+                    <li class="input_area login_radio" style="display: none">
+                        <label class="spc_radio checked"><input type="radio" name="target" value="partner" checked="checked"/><i class="symbol"></i>파트너 계정</label>
+                        <label class="spc_radio"><input type="radio" name="target" value="staff"/><i class="symbol"></i>티몬직원 계정</label>
+                    </li>
+                    <li class="input_area"><input type="text" id="form_id" value="" placeholder="아이디" class="spc_text"/></li>
+                    <li class="input_area"><input type="password" name="form_password" id="form_password" value="" placeholder="비밀번호" class="spc_text"/></li>
+                    <li class="option_area">
+                        <div class="labels">
+                            <label for="remember_id" id="remember_idSymbol" class="spc_check" >
+                                <span class="symbol"></span>
+                                <input type="checkbox" name="remember_id" id="remember_id" value="" />아이디저장
+                            </label>
+                        </div>
+                    </li>
+                    <li class="button_area">
+                        <button class="btn submit" onclick="submitLogin();return false">로그인</button>
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+
+
+         <ul class="main_login_notice">
+            <li><i class="dot"></i>파트너가 아니신가요? 파트너센터 <a href="/member/selectPartnerTpFrm" class="point">회원가입</a>으로 티몬 고객을 만나보세요!</li>
+            <li><i class="dot"></i>모바일에서도 파트너센터를 이용하실 수 있습니다.<br />Google play 또는 App Store에서 "티몬파트너센터"를 검색하세요.</li>
+            <li><i class="dot"></i>지역/여행/문화(컬쳐) 상품을 판매하는 파트너분들은 <a href="https://ps.tmon.co.kr/" class="point">[지역/여행/문화(컬쳐) 파트너 센터]</a>를 이용해 주시기 바랍니다!</li>
+        </ul>
+        </div>
+
+    </div> <!-- main_middle -->
+
+    <div class="main_bottom">
+        <ul class="footer_link">
+            <li><a href="/policy/termsOfService" target="_blank">이용약관</a></li>
+            <li><a href="/policy/privacy" target="_blank">개인정보 처리방침</a></li>
+            <li><a href="/policy/eBankingTerms" target="_blank">전자금융거래</a></li>
+            <li><a href="/policy/youthPolicy" target="_blank">청소년보호정책</a></li>
+        </ul>
+        <span class="footer_logo">TMON</span>
+        <p class="cs_center">파트너센터 <strong>1644-0552</strong><span class="holiday">평일 09~18시(점심시간 12~13시), 주말/공휴일 휴무</p>
+        <p>사업자등록번호 211-88-41856<span class="dv">|</span>통신판매업신고 제2013-서울강남-02403호</p>
+        <p>서울특별시 강남구 테헤란로 114길 38 동일타워 1,2층 (주)티몬<span class="dv">|</span>대표자 이진원<span class="dv">|</span><a href="http://www.ftc.go.kr/www/bizCommView.do?key=232&apv_perm_no=2013322016230202403&pageUnit=10&searchCnd=wrkr_no&searchKrwd=2118841856&pageIndex=1" target="_blank">사업자정보확인</a></p>
+        <p>COPYRIGHT(c) TMON INC. ALL RIGHTS RESERVED.</p>
+    </div>
+
+    <!--<script>alert("test");</script>-->
+	<!--
+    <script type="text/javascript">        var pubkey = null;
+
+        $(document).ready(function() {
+            pubkey = RSA.getPublicKey("-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0aIPufed0F6Yzdtnx8oB\nzoTtnorfUV3I8YhNOnU99zzUwx4V1IxvgTUsQpZ+iTotDuLxAuJ7laO6LXAkfcrp\nsZ\/dpVtu3+DImZZHIGgVrZyb\/osI1uqbtIOlQ+9Xt+9zvwA2WI2bsQjZYzhAzNz9\nMgdD0gkAf30Z7UhE5Wmn5RuCgQlbRrt09IGndv+s+1QAXeOJBjhF\/lc68I2o9\/rL\nAqld0yqGf0Fp5lcxD1meoH80OqL8tMvxWrbAPYtoOcZhcMRfaPKRIcB9U00xsF5D\n7vw7tJ4F+6zzAMGLhE7+CRPdOG1FWmR1D6oqXKDZBQfJFqqmI09+myPTf2zHodA0\ndwIDAQAB\n-----END PUBLIC KEY-----");
+            $('form[name="login"] :text').keypress(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    submitLogin();
+                }
+            });
+            viewNosLink();
+
+            $('form[name="login"] :password').keypress(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    submitLogin();
+                }
+            });
+
+            $("#login_id").focus();
+                    });
+
+        function submitLogin() {
+            if (validate("form_id") == false) {
+                alert('아이디를 입력하세요');
+                return;
+            }
+
+            if (validate("form_password") == false) {
+                alert('비밀번호를 입력하세요');
+                return;
+            }
+            if($("#remember_id").prop("checked")){
+                $("#id_save").val("Y");
+            }
+
+            if($("#secureLogin").attr("checked") == 'checked') {
+                $("#auth_id").val(RSA.encrypt(encodeURIComponent($("#form_id").val()), pubkey));
+//                $("#auth_password").val(RSA.encrypt(encodeURIComponent($("#form_password").val()), pubkey));
+                $("#auth_password").val(RSA.encrypt(encodeURIComponent(getPasswordElement().val()), pubkey));
+            } else {
+                $("#auth_id").val($("#form_id").val());
+                $("#auth_password").val($("#form_password").val());
+            }
+
+
+            $form = $('form[name="login"]');
+            asyncJsonSubmit($form, makeFormHandler($form, function(success, message, data){
+                if(data['checkMessage'] && data['checkMessage'] != '') {
+                    if(confirm(data['checkMessage'])) {
+                        if(!data.infoUrl) {
+                            data.infoUrl = '/member/info';
+                        }
+                        data.redirectUrl = data.infoUrl;
+                    }
+                }
+            }));
+        }
+
+        function validate(targetId) {
+            var element = $("#" + targetId);
+            if(targetId == "form_password") {
+                element = getPasswordElement();
+            }
+            var value = element.val().trim();
+            if (value.length == 0) {
+                return false;
+            }
+
+            if (element.attr("placeholder") == value) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function getPasswordElement() {
+            var pass = $('input[name="form_password"]');
+            if(pass.length > 1) {
+                return $('input[realtype="password"]');
+            } else {
+                return pass;
+            }
+        }
+
+
+        function viewNosLink() {
+            var userAgent = navigator.userAgent;
+            if(userAgent.indexOf("Windows") > -1) {
+                npPfsCtrl.isInstall({
+                    success : function() {
+                        $('#nos_area').hide();
+                        $('#install_nos').val("Y");
+                        npPfsStartup(document.login, true, false, false, false, "npkencrypt", "KEY");
+                    },
+                    fail : function() {
+                        $('#install_nos').val("N");
+                        if(userAgent.indexOf("Windows") > -1) {
+                            $('#nos_area').show();
+                        }
+                    }
+                });
+            }
+
+            if(userAgent.indexOf("Windows") > -1) {
+                $('#nos_area').show();
+            }
+        }
+
+        /* [D] 사이트맵의 활성화 스타일을 주기 위해 "btn_sitemap" 요소에 "open"클래스를 토글시켜주세요. */
+        $('.btn_sitemap').on('click', function(){
+            $(this).toggleClass('open');
+        });
+
+        /* [D] 라디오버튼의 활성화 스타일을 주기 위해 "spc_radio" 요소에 "checked"클래스를 토글시켜주세요. */
+        $('.spc_radio').on('click', 'input', function(){
+            var $this = $(this);
+            var $parent = $this.parent();
+            var _name = $this.attr('name');
+
+            $parent.siblings().find('[name="'+ _name +'"]').parent().removeClass('checked');
+            $parent.addClass('checked');
+        });
+    </script>
+	-->
+    <script src="{% static 'js/intro.js' %}"></script>
 </body>
 </html>

@@ -25,3 +25,7 @@
 .main_bottom {
     align-items: center;
 }
+
+.form-signin {
+    width: 300;
+}

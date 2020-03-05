@@ -6,20 +6,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style type="text/css">
+        tr.off {background:#ffffff}
+        tr.on {background:orange}
+    </style>
+
 </head>
 <body>
     {% block content %}
 
     <div class="board">
+        <!--<table class="table table-striped table-sm">-->
         <table class="tg">
-            <tr>
+            <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
                 <th class="tg-code"> 코드</th>
                 <th class="tg-type"> 타입</th>
                 <th class="tg-question"> 질문</th>
                 <th class="tg-answer"> 답변</th>
             </tr>
             {% for faq in faqs %}
-            <tr>
+            <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
                 <td>{{ faq.faq_id }}</td>
                 <td>{{ faq.faq_type }}</td>
                 <td>{{ faq.faq_question }}</td>
