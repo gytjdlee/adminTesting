@@ -1,35 +1,104 @@
 <!DOCTYPE html>
 {% extends 'base-admin.html' %}
 {% load static %}
-<html lang="en">
+<html lang="en" xmlns:table-layout="http://www.w3.org/1999/xhtml">
 <head>
+
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style type="text/css">
+        tr.off {background:#ffffff}
+        tr.on {background:orange}
+    </style>
+
 </head>
 <body>
+
     {% block content %}
-
-    <div class="admin1">
-
-        <div class="admin1">
-            <h1>adminAccount Page</h1>
-            <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.<br>Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.</p>
-        </div>
-
-        <div class="test_1">
-            <p><a class="btn11" href="/home">Go main</a>,
-            <a class="btn11" href="http://google.com">Go google</a></p>
-        </div>
-
+    <div class="query_menu my-1 p-1 border rounded small">
+        << 검색란 >>
+        <table class="table table-sm text-center" style="table-layout: fixed">
+        <tr class="bg-dark text-white">
+            <th class="">서버/호스트</th>
+            <th class="">계정</th>
+            <th class="">패스워드</th>
+            <th class="">생성일</th>
+            <th class="">용도</th>
+            <th class="">요청자</th>
+            <th class="">작업자</th>
+            <th class="">지라</th>
+        </tr>
+        <tr>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control" type="text" placeholder="">
+            </td>
+        </tr>
+        </table>
     </div>
 
-    {% endblock %}
+    <br>
+    <div class="board small">
+        << 결과란 >>
+        <!--<table class="table table-striped table-sm">-->
+        <table class="table table-sm table-hover">
+            <tr class="bg-dark text-white">
+                <th> 번호</th>
+                <th> 코드</th>
+                <th> 타입</th>
+                <th> 질문</th>
+                <th> 답변</th>
+            </tr>
+            {% for faq in faqs %}
+            <tr>
+                <td>{{ faq.id }}</td>
+                <td>{{ faq.faq_id }}</td>
+                <td>{{ faq.faq_type }}</td>
+                <td>{{ faq.faq_question }}</td>
+                <td>{{ faq.faq_answer }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <span class="step-links">
+
+    	{% if faqs.has_previous %}
+		    <a href="?page=1">&laquo; first</a>
+		    <a href="?page={{ faqs.previous_page_number }}">previous</a>
+		{% endif %}
+
+		<span class="current">
+		    Page {{ faqs.number }} of {{ faqs.paginator.num_pages }}.
+		</span>
+
+		{% if faqs.has_next %}
+			<a href="?page={{ faqs.next_page_number }}">next</a>
+			<a href="?page={{ faqs.paginator.num_pages }}">last &raquo;</a>
+		{% endif %}
+	    </span>
+    {% endblock content %}
 </body>
 </html>

@@ -1,6 +1,7 @@
 # Create your models here.
 from __future__ import unicode_literals
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -13,9 +14,9 @@ class Faq(models.Model):
     def __str__(self):
         return self.faq_question
 
-class userInfo(models.Model):
-    userId = models.CharField(max_length=20)
-    userPassword = models.CharField(max_length=20)
+class testNum(models.Model):
+    num_id = models.IntegerField()
+    num_id2 = models.IntegerField()
+    num_type = models.CharField(max_length=2, default='Y')
+    num_date = models.DateTimeField(datetime.now())
 
-    def __str__(self):
-        return self.userId

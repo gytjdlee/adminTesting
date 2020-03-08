@@ -11,11 +11,12 @@
 
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/offcanvas/">
 
-	<!-- LOCAL CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+	<!-- LOCAL Custom CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
 
 	<!-- Bootstrap core CSS -->
 	<link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="https://getbootstrap.com/docs/4.4/examples/offcanvas/offcanvas.css" rel="stylesheet">
 
 	<!-- Favicons -->
 	<link rel="icon" href="{% static 'image/tmon-logo1.png' %}" sizes="16x16" type="image/png">
@@ -37,15 +38,15 @@
 		}
 	  }
 	</style>
-	<!-- Custom styles for this template -->
 
-	<link href="offcanvas.css" rel="stylesheet">
 </head>
 
 
 <body class="bg-light">
+
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-	<a class="navbar-brand mr-auto mr-lg-0" href="#">Tmon DBA Admin Page</a>
+	<img class="mb2 mr-lg-2" src="{% static 'image/tmon-logo1.png' %}" style="width: 30px; height: 30px;">
+	<a class="navbar-brand mr-auto mr-lg-0" href="/home">Tmon DBA / Internal Admin </a>
 	<button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -53,11 +54,10 @@
 	<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
 	<ul class="navbar-nav mr-auto small">
 		<li class="nav-item">
-			<!--<a class="nav-link" href="#">대시보드<span class="sr-only">(current)</span></a>-->
-			<a class="nav-link" href="#">대시보드</a>
+			<a class="nav-link" href="/home">대시보드<span class="sr-only">(current)</span></a>
 		</li>
 
-		<li class="nav-item active">
+		<li class="nav-item">
 			<a class="nav-link" href="/adminAccount">계정관리</a>
 		</li>
 
@@ -79,7 +79,6 @@
 		</li>
 	</ul>
 
-
 	<form class="form-inline my-2 my-lg-0">
 		<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -94,27 +93,19 @@
 	</div>
 </nav>
 
-<!--<div class="nav-scroller bg-black shadow-sm">-->
-<div class="nav-scroller">
+<div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-    <a class="nav-link active" href="#">Dashboard</a>
-    <a class="nav-link" href="#">
-      Friends
-      <span class="badge badge-pill bg-light align-text-bottom">27</span>
-    </a>
-    <a class="nav-link" href="#">Explore</a>
-    <a class="nav-link" href="#">Suggestions</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link small" href="/adminAccount">조회</a>
+	<a class="nav-link small" href="/adminAccount/select">상세조회</a>
+    <a class="nav-link small" href="#">입력</a>
+	<a class="nav-link small" href="#">삭제</a>
+    <a class="nav-link small" href="#">업데이트</a>
   </nav>
 </div>
 
-<div class="main container">
+<div class="container" style="max-width: 1500px;">
 
-	<div class="main-title">
+	<!--<div class="main-title">
 		This is main message.
 	</div>
 
@@ -122,25 +113,34 @@
 	<div class="sub-title">
 		sub title message.
 	</div>
+-->
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<h6 class="border-bottom border-gray pb-2 mb-0">최근 업데이트 / 공지사항</h6>
 
-	<div class="sub-main">
-		{% block content %}
-		{% endblock %}
+		<div class="media text-muted pt-3">
+			<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#6610f2"/><text x="50%" y="50%" fill="#6610f2" dy=".3em">32x32</text></svg>
+			<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+				<strong class="d-block text-gray-dark">Admin Notice</strong>
+                Welcome to Tmon DBA / internal Admin page. 환영합니다.<br>계정관리 페이지입니다.
+			</p>
+		</div>
+
+		<!--<small class="d-block text-right mt-3">
+			<a href="#">All updates</a>
+		</small>-->
 	</div>
 
-<div class="my-3 p-3 bg-white rounded shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
-    <div class="media text-muted pt-3">
-      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">test admin</strong>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      </p>
-    </div>
-    <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
-  </div>
+
+	<!--<div class="sub-main1 my-3 p-3 rounded shadow-sm">
+		{% block menu %}
+		{% endblock menu %}
+	</div>-->
+
+	<div class="sub-main my-3 p-3 rounded shadow-sm">
+		{% block content %}
+		{% endblock content %}
+	</div>
+
 
 </div>
 
@@ -153,6 +153,14 @@ main bottom message.
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
 <script src="ffcanvas.js"></script>
+
+<!-- 현재 url을 호출하여 nav.a active 효과 먹이기 -->
+
+<script>
+$(function() {
+	$('nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+});
+</script>
 
 </body>
 </html>

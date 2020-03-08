@@ -3,21 +3,29 @@ from django.urls import path, include
 import login.views
 import home.views
 import adminAccount.views
+from django.conf.urls import url
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', login.views.login),
+    #url(r'^$', login.views.login),
 
-    # test
-    path('test/', home.views.test),
-    path('main/', home.views.main),
-
-    # home app
-    path('home/', home.views.index),
+    path('jadmin/', admin.site.urls),
+    path('', login.views.loginHome),
 
     # login app
     path('login/', login.views.login),
+    #path('login/', login.views.login),
+    path('loginimsi/', login.views.loginimsi),
+
+    # home app
+    path('home/', home.views.home),
 
     # adminAccount app
     path('adminAccount/', adminAccount.views.adminAccount),
+    path('adminAccount/select', adminAccount.views.adminAccount_select),
+
+
+    # test
+    path('home/test/', home.views.test),
+    path('home/testGraph', home.views.testGraph),
+
 ]

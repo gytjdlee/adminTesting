@@ -18,21 +18,20 @@
 .tmon {
     <!-- background: #f27935; // tmon color -->
 }
-.nav-right-items {
-	display: flex;
-	margin-left: auto;
-	margin-right: 30px;
-}
 
 .nav-item {
 	margin-left: 10px;
 }
 
-.nav-title {
-	margin-left: 30px;
-}
+
+#.main {
+#	width: 600px;
+#	margin: 0 auto;
+#	margin-top: 85px;
+#}
 
 .main-title {
+    margin-top: 15px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 2.25rem;
@@ -43,31 +42,17 @@
 	font-size: 1.25rem;
 }
 
-.main {
-	width: 800px;
-	margin: 0 auto;
-	margin-top: 85px;
-}
-
 .sub-main {
 	margin-top: 30px;
 	align-items: center;
 	vertical-align: middle;
 }
 
-.click-lnk {
-    link: yellow;
-    visited: white;
-    hover: orange;
-    active: white;
-    color: #f27935;
-}
 
-.board {
-	text-align: center;
-	width: 800px;
-	margin-top: 20px;
-}
+
+
+
+
 
 .tg {
 	border-collapse:collapse;
@@ -98,20 +83,20 @@
 
 .tg .tg-code{
 	font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
-	width: 100px;
+	width: 120px;
 }
 
 .tg .tg-type{
 	font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
-	width: 50px;
+	width: 70px;
 }
 
 .tg .tg-question{
 	font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
-	width: 600px;
+	width: 700px;
 }
 
 .tg .tg-answer{
 	font-weight:bold;background-color:#34cdf9;color:#333333;border-color:black;text-align:center;vertical-align:top;
-	width: 50px;
+	width: 100px;
 }
