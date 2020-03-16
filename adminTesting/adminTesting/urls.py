@@ -12,9 +12,8 @@ urlpatterns = [
     path('', login.views.loginHome),
 
     # login app
-    path('login/', login.views.login),
-    #path('login/', login.views.login),
-    path('loginimsi/', login.views.loginimsi),
+    path('login/', login.views.login, name='login'),
+    path('logout/', login.views.logout, name='logout'),
 
     # home app
     path('home/', home.views.home),
@@ -24,8 +23,13 @@ urlpatterns = [
     path('adminAccount/select', adminAccount.views.adminAccount_select),
 
 
+    #########################################################################
+
     # test
-    path('home/test/', home.views.test),
+    path('home/test/', home.views.test, name='test'),
+    path('home/test1/', home.views.test1, name='test1'),
     path('home/testGraph', home.views.testGraph),
+
+    #########################################################################
 
 ]

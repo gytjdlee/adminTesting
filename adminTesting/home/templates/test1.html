@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends 'base-admin.html' %}
+{% extends 'base.html' %}
 {% load static %}
 <html lang="en">
 <head>
@@ -36,42 +36,36 @@
         <tr class="bg-dark text-white">
             <!--<th class="">서버/호스트</th>-->
             <th class="">코드</th>
-            <th class="">계정</th>
-            <th class="">패스워드</th>
-            <th class="">생성일</th>
-            <th class="">용도</th>
-            <th class="">요청자</th>
-            <th class="">작업자</th>
+            <th class=""></th>
+            <th class=""></th>
+            <th class=""></th>
+            <th class=""></th>
+            <th class=""></th>
+            <th class=""></th>
             <th class=""></th>
         </tr>
         <tr>
-            <!--<form class="form-inline" action="{ url 'adminAccount:adminAccount_fn_search' }" method="POST">-->
-            <form class="form-inline" action="/adminAccount/" method="POST">
+            <form class="form-inline" action="{$ url 'test1' %}" method='post'>
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="var1" name="var1" type="text" placeholder="" value="{{ current_val }}" />
+                <input class="form-control" id="v_id" name="v_id" type="text" placeholder="" value="{{ current_val }}" />
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <button class="btn btn-outline-primary" type="submit">검색</button>
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
             </td>
             <td class="">
-                    <button class="btn btn-outline-primary" type="submit">검색</button>
             </td>
 
             </form>

@@ -76,6 +76,16 @@ IMSI 페이지
 	<p class="mt-5"></p>
 </form>
 
+<ul class="nav navbar-nav navbar-right">
+  {% if user.is_active %}
+  <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-heart"></span> {{user.username}}</a></li>
+  <li><a href="{% url 'logout' %}">Logout</a></li>
+  {% else %}
+  <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-user"></span> Login</a></li>
+  <li><a href="{% url 'admin:index' %}">Admin</a></li>
+  {% endif %}
+</ul>
+
 <script src="{% static 'js/intro.js' %}"></script>
 
 </body>

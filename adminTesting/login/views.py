@@ -10,13 +10,16 @@ def loginHome(request):
 
 
 def login(request):
-     if request.method == "1POST":
-         username = request.POST['inputAccount']
-         password = request.POST['inputPassword']
+     if request.method == "post":
+
+         username = request.POST['v_Account']
+         password = request.POST['v_Password']
+
          user = auth.authenticate(request, username=username, password=password)
+
          if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            return redirect('')
          else:
              return render(request, 'login.html', {'error': 'username or password is incorrect'})
      else:
@@ -24,7 +27,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect('')
 
 def loginimsi(request):
     return render(request, 'login_imsi.html')
