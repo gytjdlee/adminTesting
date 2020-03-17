@@ -45,7 +45,7 @@
             <th class=""></th>
         </tr>
         <tr>
-            <form class="form-inline" action="/home/test/" method='post'>
+            <form class="form-inline" action="{% url 'test' %}" method='post'>
             {% csrf_token %}
 
             <td class="">

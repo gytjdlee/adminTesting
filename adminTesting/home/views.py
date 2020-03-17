@@ -42,7 +42,7 @@ def test(request):
     if request.method == 'POST':
         v_id = request.POST['v_id']
 
-        faq_list = Faq.objects.filter(faq_id=v_id)
+        faq_list = Faq.objects.filter(faq_id__startswith=v_id)
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)
