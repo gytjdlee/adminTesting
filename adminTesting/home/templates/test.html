@@ -45,7 +45,7 @@
             <th class=""></th>
         </tr>
         <tr>
-            <form class="form-inline" action="{% url 'test_select' %}" method='post'>
+            <form class="form-inline" action="{% url 'test_select' %}" method="post">
             {% csrf_token %}
 
             <td class="">
@@ -84,7 +84,7 @@
             <th class=""></th>
         </tr>
         <tr>
-            <form class="form-inline" action="" method=''>
+            <form class="form-inline" action="" method='' name="insertForm">
             {% csrf_token %}
 
             <td class="">
@@ -100,15 +100,18 @@
                 <input class="form-control" id="v_answer" name="v_answer" type="text" placeholder="" />
             </td>
             <td class="">
-                <button class="btn btn-outline-danger" onclick="testAlertBox();" type="submit">입력</button>
+                <button class="btn btn-outline-danger" onclick="insertBox();" type="submit">입력</button>
 
                     <script type="text/javascript">
-                        function testAlertBox() {
+                        function insertBox() {
                             var retVal = confirm("입력하시겠습니까?");
                             if (retVal == true ){
-                                alert("확인!");
+                                var insertForm = document.insertForm;
+                                insertForm.action="{% url 'test_select' %}";
+                                insertForm.method="post";
+                                insertForm.submit();
                             }else{
-                                alert("취소!");
+                                return;
                             }
                         }
                     </script>

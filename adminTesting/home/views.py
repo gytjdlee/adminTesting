@@ -50,7 +50,7 @@ def test(request):
             faq_type__startswith=v_type,
             faq_question__startswith=v_question,
             faq_answer__startswith=v_answer
-        )#.order_by('-faq_id')
+        ).order_by('-id')
 
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')
@@ -59,7 +59,7 @@ def test(request):
         return render(request, 'test.html', context)
 
     else:
-        faq_list = Faq.objects.all()#.order_by('-faq_id')
+        faq_list = Faq.objects.all().order_by('-id')
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)
@@ -67,6 +67,18 @@ def test(request):
         return render(request, 'test.html', context)
 
     #return render(request, 'test1.html', { 'form': form })
+
+def test_insert(request):
+    if request.method == 'POST':
+        return render(request, 'testGraph.html')
+
+    else:
+        faq_list = Faq.objects.all()#.order_by('-faq_id')
+        paginator = Paginator(faq_list, 10)
+        page = request.GET.get('page')
+        faqs = paginator.get_page(page)
+        context = {'faqs': faqs}
+        return render(request, 'test.html', context)
 
 ########################################################################
 
@@ -87,12 +99,4 @@ def test1(request):
 
 def testGraph(request):
     return render(request, 'testGraph.html')
-
-def post(request):
-    form = FaqForm()
-    return render(request, 'main.html', {"form":form})
-
-
-
-
 

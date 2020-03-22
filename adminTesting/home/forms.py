@@ -6,7 +6,8 @@ from .models import Faq
 
 class FaqForm(forms.Form):
     class Meta:
-        faq_id = forms.CharField()
+        model = Faq
+        fields = ['faq_id','faq_type','faq_question','faq_answer']
 
 #class PostForm(forms.ModelForm):
 
