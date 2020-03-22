@@ -40,9 +40,18 @@ def home(request):
 
 def test(request):
     if request.method == 'POST':
-        v_id = request.POST['v_id']
+        v_code = request.POST['v_code']
+        v_type = request.POST['v_type']
+        v_question = request.POST['v_question']
+        v_answer= request.POST['v_answer']
 
-        faq_list = Faq.objects.filter(faq_id__startswith=v_id)
+        faq_list = Faq.objects.filter(
+            faq_id__startswith=v_code,
+            faq_type__startswith=v_type,
+            faq_question__startswith=v_question,
+            faq_answer__startswith=v_answer
+        )#.order_by('-faq_id')
+
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)
@@ -50,7 +59,7 @@ def test(request):
         return render(request, 'test.html', context)
 
     else:
-        faq_list = Faq.objects.all()
+        faq_list = Faq.objects.all()#.order_by('-faq_id')
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)

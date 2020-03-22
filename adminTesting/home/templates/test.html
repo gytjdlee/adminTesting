@@ -30,48 +30,98 @@
 
     </div>
 
+
+    <!-- 검색란 -->
+
     <div class="query_menu my-1 p-1 border rounded small">
         << 검색란 >>
         <table class="table table-sm text-center" style="table-layout: fixed">
         <tr class="bg-dark text-white">
             <!--<th class="">서버/호스트</th>-->
             <th class="">코드</th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
+            <th class="">타입</th>
+            <th class="">질문</th>
+            <th class="">답변</th>
             <th class=""></th>
         </tr>
         <tr>
-            <form class="form-inline" action="{% url 'test' %}" method='post'>
+            <form class="form-inline" action="{% url 'test_select' %}" method='post'>
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="v_id" name="v_id" type="text" placeholder="" />
+                <input class="form-control" id="v_code" name="v_code" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_type" name="v_type" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_question" name="v_question" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_answer" name="v_answer" type="text" placeholder="" />
             </td>
             <td class="">
                 <button class="btn btn-outline-primary" type="submit">검색</button>
-            </td>
-            <td class="">
-
-            </td>
-            <td class="">
-            </td>
-            <td class="">
-            </td>
-            <td class="">
-            </td>
-            <td class="">
-            </td>
-            <td class="">
             </td>
 
             </form>
         </tr>
         </table>
     </div>
+
+
+    <!-- 입력란 -->
+
+    <div class="query_menu my-1 p-1 border rounded small">
+        << 입력란 >>
+        <table class="table table-sm text-center" style="table-layout: fixed">
+        <tr class="bg-dark text-white">
+            <!--<th class="">서버/호스트</th>-->
+            <th class="">코드</th>
+            <th class="">타입</th>
+            <th class="">질문</th>
+            <th class="">답변</th>
+            <th class=""></th>
+        </tr>
+        <tr>
+            <form class="form-inline" action="" method=''>
+            {% csrf_token %}
+
+            <td class="">
+                <input class="form-control" id="v_code" name="v_code" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_type" name="v_type" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_question" name="v_question" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control" id="v_answer" name="v_answer" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <button class="btn btn-outline-danger" onclick="testAlertBox();" type="submit">입력</button>
+
+                    <script type="text/javascript">
+                        function testAlertBox() {
+                            var retVal = confirm("입력하시겠습니까?");
+                            if (retVal == true ){
+                                alert("확인!");
+                            }else{
+                                alert("취소!");
+                            }
+                        }
+                    </script>
+
+            </td>
+
+            </form>
+        </tr>
+        </table>
+    </div>
+
+
+    <!-- 결과란 -->
 
     <br>
     <div class="board small">
@@ -97,11 +147,11 @@
         </table>
     </div>
 
-    <span class="step-links">
+    <span class="step-links small">
 
     	{% if faqs.has_previous %}
-		    <a href="?page=1">&laquo; first</a>
-		    <a href="?page={{ faqs.previous_page_number }}">previous</a>
+		    <a href="?page=1">&laquo; 맨 처음</a>
+		    <a href="?page={{ faqs.previous_page_number }}">이전</a>
 		{% endif %}
 
 		<span class="current">
@@ -109,11 +159,12 @@
 		</span>
 
 		{% if faqs.has_next %}
-			<a href="?page={{ faqs.next_page_number }}">next</a>
-			<a href="?page={{ faqs.paginator.num_pages }}">last &raquo;</a>
+			<a href="?page={{ faqs.next_page_number }}">다음</a>
+			<a href="?page={{ faqs.paginator.num_pages }}">마지막 &raquo;</a>
 		{% endif %}
 	</span>
 
     {% endblock %}
+
 </body>
 </html>

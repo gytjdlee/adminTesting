@@ -26,7 +26,8 @@ urlpatterns = [
     #########################################################################
 
     # test
-    path('home/test/', home.views.test, name='test'),
+    path('home/test/', home.views.test, name='test_select'),
+    path('home/test/', home.views.test, name='test_insert'),
     path('home/test1/', home.views.test1, name='test1'),
     path('home/testGraph', home.views.testGraph),
 
