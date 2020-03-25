@@ -4,7 +4,7 @@ from .models import Faq
 
 # Create your models here.
 
-class FaqForm(forms.Form):
+class FaqForm(forms.ModelForm):
     class Meta:
         model = Faq
         fields = ['faq_id','faq_type','faq_question','faq_answer']

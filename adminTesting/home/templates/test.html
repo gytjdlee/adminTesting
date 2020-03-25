@@ -10,20 +10,16 @@
 <body>
     {% block content %}
 
-    <div class="admin1">
+    <div class="">
 
-        <div class="admin1">
-            <h1>adminAccount Select Page</h1>
-            <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.<br>Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.</p>
+        <div class="">
+            <h1>Wellcome to Test Page :)</h1>
+            <p class="small">
+               구현을 위한 모든 테스트를 위한 페이지입니다.
+            </p>
         </div>
 
-        <div class="test_1">
+        <div class="small">
             <p><a class="btn11" href="/home">Go main</a>,
             <a class="btn11" href="http://google.com">Go google</a></p>
         </div>
@@ -49,16 +45,16 @@
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="v_code" name="v_code" type="text" placeholder="" />
+                <input class="form-control" id="faq_id" name="faq_id" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_type" name="v_type" type="text" placeholder="" />
+                <input class="form-control" id="faq_type" name="faq_type" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_question" name="v_question" type="text" placeholder="" />
+                <input class="form-control" id="faq_question" name="faq_question" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_answer" name="v_answer" type="text" placeholder="" />
+                <input class="form-control" id="faq_answer" name="faq_answer" type="text" placeholder="" />
             </td>
             <td class="">
                 <button class="btn btn-outline-primary" type="submit">검색</button>
@@ -88,16 +84,16 @@
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="v_code" name="v_code" type="text" placeholder="" />
+                <input class="form-control" id="faq_id" name="faq_id" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_type" name="v_type" type="text" placeholder="" />
+                <input class="form-control" id="faq_type" name="faq_type" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_question" name="v_question" type="text" placeholder="" />
+                <input class="form-control" id="faq_question" name="faq_question" type="text" placeholder="" />
             </td>
             <td class="">
-                <input class="form-control" id="v_answer" name="v_answer" type="text" placeholder="" />
+                <input class="form-control" id="faq_answer" name="faq_answer" type="text" placeholder="" />
             </td>
             <td class="">
                 <button class="btn btn-outline-danger" onclick="insertBox();" type="submit">입력</button>
@@ -107,7 +103,7 @@
                             var retVal = confirm("입력하시겠습니까?");
                             if (retVal == true ){
                                 var insertForm = document.insertForm;
-                                insertForm.action="{% url 'test_select' %}";
+                                insertForm.action="{% url 'test_insert' %}";
                                 insertForm.method="post";
                                 insertForm.submit();
                             }else{
