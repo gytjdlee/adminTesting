@@ -3,6 +3,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.urls import reverse_lazy
+
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
 
 from .models import *
 from .forms import FaqForm
@@ -78,6 +81,26 @@ def test_insert(request):
         form = FaqForm()
 
     return render(request, 'test.html', {'form': form})
+
+
+def test_delete(request):
+    return render(request, 'testGraph.html')
+
+def test_update(request):
+    id = request.GET['faq_pk']
+
+    faqs = Faq.objects.filter(faq_id__startswith=id)
+    context = {'faqs': faqs}
+    #return render(request, 'test_update.html', context)
+    return render(request, 'test_update.html', context)
+
+
+class FaqUpdateView(BSModalUpdateView):
+    model = Faq
+    template_name = 'test_update.html'
+    form_class = FaqForm
+    success_message = 'Sucess: Faq was update'
+    success_url = reverse_lazy('test_select')
 
 
 ########################################################################

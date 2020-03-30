@@ -1,6 +1,7 @@
 # Create your models here.
 from django import forms
 from .models import Faq
+from bootstrap_modal_forms.forms import BSModalForm
 
 # Create your models here.
 
