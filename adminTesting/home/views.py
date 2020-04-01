@@ -84,15 +84,22 @@ def test_insert(request):
 
 
 def test_delete(request):
-    return render(request, 'testGraph.html')
+    if request.method == 'POST':
+        pk = request.POST['id']
+        faq = Faq.objects.get(id=pk)
+        faq.delete()
+        return redirect('/home/test')
+
+    return render(request, 'test.html')
 
 def test_update(request):
-    id = request.GET['faq_pk']
+    #id = request.GET['faq_pk']
 
-    faqs = Faq.objects.filter(faq_id__startswith=id)
-    context = {'faqs': faqs}
+    #faqs = Faq.objects.filter(faq_id__startswith=id)
+    #context = {'faqs': faqs}
     #return render(request, 'test_update.html', context)
-    return render(request, 'test_update.html', context)
+    return render(request, 'testGraph.html')
+    #return render(request, 'test_update.html', context)
 
 
 class FaqUpdateView(BSModalUpdateView):

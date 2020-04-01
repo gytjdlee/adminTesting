@@ -30,9 +30,7 @@ urlpatterns = [
 
     path('home/test/insert/', home.views.test_insert, name='test_insert'),
     path('home/test/delete/', home.views.test_delete, name='test_delete'),
-
-    path('home/test/update/<int:pk>', home.views.FaqUpdateView.as_view(), name='test_update'),
-    #path('home/test/update/', home.views.test_update, name='test_update'),
+    path('home/test/update/', home.views.test_update, name='test_update'),
 
     path('home/test1/', home.views.test1, name='test1'),
     path('home/testGraph/', home.views.testGraph, name='testGraph'),
