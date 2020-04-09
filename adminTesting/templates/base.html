@@ -35,8 +35,6 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-
-
 	<style>
 	  .bd-placeholder-img {
 		font-size: 1.125rem;
@@ -53,12 +51,11 @@
 		}
 	  }
 	</style>
-
 </head>
-
 
 <body class="bg-light">
 
+<!-- NAV TOP -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
 	<img class="mb2 mr-lg-2" src="{% static 'image/tmon-logo1.png' %}" style="width: 30px; height: 30px;">
 	<a class="navbar-brand mr-auto mr-lg-0" href="/home">Tmon DBA / Internal Admin </a>
@@ -77,11 +74,11 @@
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#">어드민1</a>
+			<a class="nav-link" href="#">모니터링</a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#">어드민2</a>
+			<a class="nav-link" href="#">URL</a>
 		</li>
 
 		<li class="nav-item dropdown">
@@ -114,6 +111,7 @@
 	</div>
 </nav>
 
+<!-- NAV TOP MENU-->
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
     <a class="nav-link small" href="/home">Dashboard</a>
@@ -122,12 +120,11 @@
       <!--<span class="badge badge-pill bg-light align-text-bottom">7</span>-->
     </a>
     <a class="nav-link small" href="/home/testGraph">Test graph</a>
-    <a class="nav-link small" href="#">mneu3</a>
   </nav>
 </div>
 
-<div class="container" style="max-width: 1500px;">
-
+<!-- MAIN -->
+<div class="container" style="max-width: 1800px;">
 	<!--<div class="main-title">
 		This is main message.
 	</div>
@@ -153,16 +150,14 @@
 		</small>-->
 	</div>
 
-
 	<div class="sub-main my-3 p-3 rounded shadow-sm">
 		{% block content %}
 		{% endblock %}
 	</div>
 
-
-
 </div>
 
+<!-- BOTTOM -->
 <!--<div class="main-bottom">
 main bottom message.
 </div>-->

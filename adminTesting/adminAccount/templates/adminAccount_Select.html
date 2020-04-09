@@ -46,7 +46,7 @@
         </tr>
         <tr>
             <!--<form class="form-inline" action="{ url 'adminAccount:adminAccount_fn_search' }" method="POST">-->
-            <form class="form-inline" action="/adminAccount/" method="POST">
+            <form class="form-inline" action="{% url 'account_select1' %}" method="POST">
             {% csrf_token %}
 
             <td class="">

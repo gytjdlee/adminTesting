@@ -18,9 +18,17 @@ urlpatterns = [
     # home app
     path('home/', home.views.home),
 
-    # adminAccount app
-    path('adminAccount/', adminAccount.views.adminAccount),
-    path('adminAccount/select', adminAccount.views.adminAccount_select),
+
+    #########################################################################
+    # account app
+    path('adminAccount/', adminAccount.views.account, name='account_select'),
+    path('adminAccount/fast_select', adminAccount.views.account_fast_select, name='account_fast_select'),
+    path('adminAccount/insert/', adminAccount.views.account_insert, name='account_insert'),
+    path('adminAccount/update/', adminAccount.views.account_update, name='account_update'),
+    path('adminAccount/delete/', adminAccount.views.account_delete, name='account_delete'),
+
+    # account test
+    path('adminAccount/select/', adminAccount.views.account_select, name='account_select1'),
 
 
     #########################################################################

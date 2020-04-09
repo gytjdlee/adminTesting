@@ -51,12 +51,11 @@
 		}
 	  }
 	</style>
-
 </head>
-
 
 <body class="bg-light">
 
+<!-- NAV TOP -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
 	<img class="mb2 mr-lg-2" src="{% static 'image/tmon-logo1.png' %}" style="width: 30px; height: 30px;">
 	<a class="navbar-brand mr-auto mr-lg-0" href="/home">Tmon DBA / Internal Admin </a>
@@ -75,11 +74,11 @@
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#">어드민1</a>
+			<a class="nav-link" href="#">모니터링</a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#">어드민2</a>
+			<a class="nav-link" href="#">URL</a>
 		</li>
 
 		<li class="nav-item dropdown">
@@ -92,8 +91,9 @@
 		</li>
 	</ul>
 
-	<form class="form-inline my-2 my-lg-0">
-		<input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+	<form class="form-inline my-2 my-lg-0" action="{% url 'account_fast_select' %}" method="post">
+		{% csrf_token %}
+		<input class="form-control form-control-sm mr-sm-2" type="text" id="account_user" name="account_user" placeholder="빠른 계정검색" aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Search</button>
 	</form>
 
@@ -106,18 +106,18 @@
 	</div>
 </nav>
 
+<!-- NAV TOP MENU-->
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-    <a class="nav-link small" href="/adminAccount">조회</a>
-	<a class="nav-link small" href="/adminAccount/select">상세조회</a>
-    <a class="nav-link small" href="#">입력</a>
-	<a class="nav-link small" href="#">삭제</a>
-    <a class="nav-link small" href="#">업데이트</a>
+    <a class="nav-link small" href="{% url 'account_select' %}">조회</a>
+	<a class="nav-link small" href="{% url 'account_select1' %}">상세조회</a>
+    <a class="nav-link small" href="#">대량삭제</a>
+	<a class="nav-link small" href="#">대량업데이트</a>
   </nav>
 </div>
 
-<div class="container" style="max-width: 1500px;">
-
+<!-- MAIN -->
+<div class="container" style="max-width: 1800px;">
 	<!--<div class="main-title">
 		This is main message.
 	</div>
@@ -143,32 +143,20 @@
 		</small>-->
 	</div>
 
-
-	<!--<div class="sub-main1 my-3 p-3 rounded shadow-sm">
-		{% block menu %}
-		{% endblock menu %}
-	</div>-->
-
-	<div class="sub-main my-3 p-3 rounded shadow-sm">
+	<div class="sub-main my-1 p-3 rounded shadow-sm">
 		{% block content %}
-		{% endblock content %}
+		{% endblock %}
 	</div>
-
 
 </div>
 
+<!-- BOTTOM -->
 <!--<div class="main-bottom">
 main bottom message.
 </div>-->
 
 
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-<script src="ffcanvas.js"></script>
-
 <!-- 현재 url을 호출하여 nav.a active 효과 먹이기 -->
-
 <script>
 $(function() {
 	$('nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
