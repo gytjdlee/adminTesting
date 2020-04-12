@@ -35,7 +35,9 @@ def account(request):
             account_grant__contains=account_grant,
             account_db__startswith=account_db,
             account_table__startswith=account_table,
-            account_url__contains=account_url
+            account_url__contains=account_url,
+            account_del_yn='N' # 계정 삭제여부
+
         ).order_by('-id')
 
         paginator = Paginator(account_list, 10)
@@ -45,7 +47,8 @@ def account(request):
         return render(request, 'adminAccount.html', context)
 
     else:
-        account_list = Account.objects.all().order_by('-id')
+        #account_list = Account.objects.all().order_by('-id')
+        account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
         paginator = Paginator(account_list, 10)
         page = request.GET.get('page')
         accounts = paginator.get_page(page)
@@ -57,18 +60,102 @@ def account_insert(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
         if form.is_valid():
-            form.save()
-        return redirect('/adminAccount')
+            modify_form = form.save(commit=False)
+
+            modify_form.account_sql = "/*" + form.cleaned_data['account_url'] + \
+            "*/" + " grant " + form.cleaned_data['account_grant'] + " on " + \
+            form.cleaned_data['account_db'] + "." + form.cleaned_data['account_table'] + \
+            " to " + "'" + form.cleaned_data['account_user'] + "'@'" + form.cleaned_data['account_host'] + \
+            "' identified by '" + form.cleaned_data['account_pass'] + "';"
+
+            # ex) /*ARCG-9999*/grant select, insert, update, delete on admdb.* to 'deal_detail'@'10.11.12.%' identified by 'password';
+            #print(modify_form.account_sql)
+
+            #modify_form.account_sql = form.cleaned_data['account_svr']+' show '+form.cleaned_data['account_user']
+            #print("============ 'sql' :" + modify_form.account_sql)
+
+            modify_form.save()
+            return redirect('/adminAccount')
+        else:
+            print('test')
+            return redirect('/adminAccount')
+
     else:
         form = AccountForm()
 
     return render(request, 'adminAccount.html', {'form': form})
 
+#def account_update(request):
+#    if request.method == 'POST':
+#        account = Account.objects.get(id = request.POST['id'])
+#        form = AccountForm(request.POST)
+#
+#        if form.is_valid():
+#            print(form.cleaned_data)
+#
+#        return redirect('/adminAccount')
+#
+#    else:
+#        form = AccountForm()
+#
+#    return render(request, 'adminAccount.html', {'form': form})
+
 def account_update(request):
-    return render(request, 'adminAccount_Select.html')
+    if request.method == 'POST':
+        account = Account.objects.get(id=request.POST['id'])
+        form = AccountUpdateForm(request.POST)
+
+        if form.is_valid():
+            account.account_update_dt = datetime.now()
+            account.account_requestor = form.cleaned_data['account_requestor']
+            account.account_devteam = form.cleaned_data['account_devteam']
+            account.account_svr = form.cleaned_data['account_svr']
+            account.account_user = form.cleaned_data['account_user']
+            account.account_host = form.cleaned_data['account_host']
+            account.account_pass = form.cleaned_data['account_pass']
+            account.account_grant = form.cleaned_data['account_grant']
+            account.account_grant_with = form.cleaned_data['account_grant_with']
+            account.account_db = form.cleaned_data['account_db']
+            account.account_table = form.cleaned_data['account_table']
+            account.account_info = form.cleaned_data['account_info']
+            account.account_url = form.cleaned_data['account_url']
+
+            account.account_sql = "/*" + form.cleaned_data['account_url'] + \
+                                  "*/" + " grant " + form.cleaned_data['account_grant'] + " on " + \
+                                  form.cleaned_data['account_db'] + "." + form.cleaned_data['account_table'] + \
+                                  " to " + "'" + form.cleaned_data['account_user'] + "'@'" + form.cleaned_data[
+                                      'account_host'] + \
+                                  "' identified by '" + form.cleaned_data['account_pass'] + "';"
+            account.save()
+
+        return redirect('/adminAccount')
+
+    else:
+        form = AccountForm()
+
+    return render(request, 'adminAccount.html', {'form': form})
 
 def account_delete(request):
-    return render(request, 'adminAccount_Select.html')
+    if request.method == 'POST':
+        account = Account.objects.get(id = request.POST['id']) # pk에 해당하는 업데이트 대상을 가져옴
+        form = AccountDelForm(request.POST) # 입력값 가져옴
+
+        if form.is_valid():
+            print(form.cleaned_data) # 콘솔 찍기. 디버깅
+
+            account.account_del_yn = 'Y'
+            account.account_update_dt = datetime.now()
+            account.account_del_dt = datetime.now()
+            account.account_del_reason = form.cleaned_data['account_del_reason']
+            account.account_del_note = form.cleaned_data['account_del_note']
+            account.save()
+
+        return redirect('/adminAccount')
+
+    else:
+        form = AccountForm()
+
+    return render(request, 'adminAccount.html', {'form': form})
 
 
 def account_fast_select(request):
@@ -76,7 +163,8 @@ def account_fast_select(request):
         account_user = request.POST['account_user']
         #print("input val : " + account_user)
         account_list = Account.objects.filter(
-            account_user__startswith=account_user
+            account_user__startswith=account_user,
+            account_del_yn = 'N'  # 계정 삭제여부
         ).order_by('-id')
 
         paginator = Paginator(account_list, 10)
@@ -86,20 +174,21 @@ def account_fast_select(request):
         return render(request, 'adminAccount.html', context)
 
     else:
-        account_list = Account.objects.all().order_by('-id')
+        #account_list = Account.objects.all().order_by('-id')
+        account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
         paginator = Paginator(account_list, 10)
         page = request.GET.get('page')
         accounts = paginator.get_page(page)
         context = {'accounts' : accounts}
         return render(request, 'adminAccount.html', context)
 
-def account_select(request):
+def account_selectDel(request):
     faq_list = Faq.objects.filter(faq_id="test@test.com")
     paginator = Paginator(faq_list, 10)
     page = request.GET.get('page')
     faqs = paginator.get_page(page)
     context = {'faqs': faqs}
-    return render(request, 'adminAccount_Select.html', context)
+    return render(request, 'adminAccount_selectDel.html', context)
 
 def account_fn_search(request):
     if request.method == 'POST':

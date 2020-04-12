@@ -15,8 +15,8 @@ class Faq(models.Model):
 		return self.faq_question
 
 class Account(models.Model):
-	account_create_dt = models.DateTimeField(default=datetime.now, null=True)		# 생성일        -- 2020-02-06
-	account_update_dt = models.DateTimeField(default=datetime.now, null=True)    	# 변경일        -- 2020-02-06
+	account_create_dt = models.DateTimeField(default=datetime.now)		# 생성일        -- 2020-02-06
+	account_update_dt = models.DateTimeField(default=datetime.now)    	# 변경일        -- 2020-02-06
 	account_end_dt = models.DateTimeField(null=True) 				       			# 만료일        -- null
 	account_requestor = models.CharField(null=True, max_length=100)      			# 요청자명      -- 이정희
 	account_devteam = models.CharField(null=True, max_length=100, default='') 		# 요청팀      	-- 표준화
@@ -30,12 +30,12 @@ class Account(models.Model):
 	account_db = models.CharField(null=True, max_length=100)             			# db          	-- test
 	account_table = models.CharField(null=True, max_length=100)          			# table       	-- test
 	account_info = models.CharField(null=True, max_length=100)            			# 용도         	-- 테스트용
-	account_sql = models.CharField(null=True, max_length=200)            			# sql         	-- 주석 sql~~~~
+	account_sql = models.CharField(null=True, max_length=200, default='')            			# sql         	-- 주석 sql~~~~
 	account_url = models.CharField(null=True, max_length=100)            			# url         	-- 지라 혹은 위키
 	account_del_yn = models.CharField(null=True, max_length=100, default='N')       # 삭제여부		-- N/Y
 	account_del_dt = models.DateTimeField(null=True)                   				# 삭제조치일
-	account_del_reason = models.CharField(null=True, max_length=100)     			# 삭제사유
-	account_del_note = models.CharField(null=True, max_length=100)       			# 삭제비고
+	account_del_reason = models.CharField(null=True, max_length=100, default='')     			# 삭제사유
+	account_del_note = models.CharField(null=True, max_length=100, default='')       			# 삭제비고
 
 	def __str__(self):
 		return self.account_create_dt

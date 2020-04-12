@@ -73,6 +73,7 @@
         <tr class="bg-dark text-white">
             <!--<th class="">서버/호스트</th>-->
             <th class="rounded-left">요청자명</th>
+            <th class="">요청팀</th>
             <th class="">서버</th>
             <th class="">아이디</th>
             <th class="">호스트</th>
@@ -90,6 +91,9 @@
 
             <td class="">
                 <input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" placeholder="">
             </td>
             <td class="">
                 <input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" placeholder="">
@@ -175,6 +179,7 @@
                            data-account_requestor="{{ account.account_requestor }}"
                            data-account_svr="{{ account.account_svr }}"
                            data-account_user="{{ account.account_user }}"
+                           data-account_devteam="{{ account.account_devteam}}"
                            data-account_host="{{ account.account_host }}"
                            data-account_pass="{{ account.account_pass }}"
                            data-account_hash="{{ account.account_hash }}"
@@ -182,7 +187,7 @@
                            data-account_grant_with="{{ account.account_grant_with }}"
                            data-account_db="{{ account.account_db }}"
                            data-account_table="{{ account.account_table }}"
-                           data-account_use="{{ account.account_use }}"
+                           data-account_info="{{ account.account_info}}"
                            data-account_sql="{{ account.account_sql }}"
                            data-account_url="{{ account.account_url }}"
                            data-account_note="{{ account.account_note }}"
@@ -199,6 +204,7 @@
                            data-account_requestor="{{ account.account_requestor }}"
                            data-account_svr="{{ account.account_svr }}"
                            data-account_user="{{ account.account_user }}"
+                           data-account_devteam="{{ account.account_devteam}}"
                            data-account_host="{{ account.account_host }}"
                            data-account_pass="{{ account.account_pass }}"
                            data-account_hash="{{ account.account_hash }}"
@@ -206,7 +212,7 @@
                            data-account_grant_with="{{ account.account_grant_with }}"
                            data-account_db="{{ account.account_db }}"
                            data-account_table="{{ account.account_table }}"
-                           data-account_use="{{ account.account_use }}"
+                           data-account_info="{{ account.account_info}}"
                            data-account_sql="{{ account.account_sql }}"
                            data-account_url="{{ account.account_url }}"
                            data-account_note="{{ account.account_note }}"
@@ -228,6 +234,7 @@
                        data-account_requestor="{{ account.account_requestor }}"
                        data-account_svr="{{ account.account_svr }}"
                        data-account_user="{{ account.account_user }}"
+                       data-account_devteam="{{ account.account_devteam}}"
                        data-account_host="{{ account.account_host }}"
                        data-account_pass="{{ account.account_pass }}"
                        data-account_hash="{{ account.account_hash }}"
@@ -235,7 +242,7 @@
                        data-account_grant_with="{{ account.account_grant_with }}"
                        data-account_db="{{ account.account_db }}"
                        data-account_table="{{ account.account_table }}"
-                       data-account_use="{{ account.account_use }}"
+                       data-account_info="{{ account.account_info}}"
                        data-account_sql="{{ account.account_sql }}"
                        data-account_url="{{ account.account_url }}"
                        data-account_note="{{ account.account_note }}"
@@ -273,134 +280,7 @@
 		{% endif %}
 	</span>
 
-    <!-- Modal 업데이트 부분 BAK -->
-    <!--
-    <form class="" action="{% url 'account_update' %}" method="post" name="updateForm">
-    {% csrf_token %}
-    <div class="modal fade small" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">account update</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-
-              <table class="table table-sm text-center" style="table-layout: fixed">
-                  <tr class="bg-dark text-white">
-                      <th class="">id(pk)</th>
-                  </tr>
-                  <tr>
-                      <td class="">
-                          <input class="form-control form-control-sm" id="id" name="id" type="text">
-                      </td>
-                  </tr>
-              </table>
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">생성일</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="account_create_dt" name="account_create_dt" type="text">
-                    </td>
-                </tr>
-                </table>
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">업데이트일</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text">
-                    </td>
-                </tr>
-                </table>
-
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">만료일</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="account_end_dt" name="account_end_dt" type="text">
-                    </td>
-                </tr>
-                </table>
-
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">요청자</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text">
-                    </td>
-                </tr>
-                </table>
-                <p class="text-right">수정 하시겠습니까?　</p>
-
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-sm btn-outline-primary">확인</button>
-            <button type="" class="btn btn-sm btn-outline-danger" data-dismiss="modal">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    </form>
-    <script>
-    $('#modal_update').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-		var id = button.data('id');
-		var account_create_dt = button.data('account_create_dt');
-		var account_update_dt = button.data('account_update_dt');
-		var account_end_dt = button.data('account_end_dt');
-		var account_requestor = button.data('account_requestor');
-		var account_svr = button.data('account_svr');
-		var account_user = button.data('account_user');
-		var account_host = button.data('account_host');
-		var account_pass = button.data('account_pass');
-		var account_hash = button.data('account_hash');
-		var account_grant = button.data('account_grant');
-		var account_grant_with = button.data('account_grant_with');
-		var account_db = button.data('account_db');
-		var account_table = button.data('account_table');
-		var account_use = button.data('account_use');
-		var account_sql = button.data('account_sql');
-		var account_url = button.data('account_url');
-		var account_note = button.data('account_note');
-		var account_del_yn = button.data('account_del_yn');
-		var account_del_dt = button.data('account_del_dt');
-		var account_del_reason = button.data('account_del_reason');
-		var account_del_note = button.data('account_del_note');
-
-		var modal = $(this)
-		modal.find('#id').val(id);
-		modal.find('#account_create_dt').val(account_create_dt);
-		modal.find('#account_update_dt').val(account_update_dt);
-		modal.find('#account_end_dt').val(account_end_dt);
-	    modal.find('#account_requestor').val(account_requestor);
-		modal.find('#account_svr').val(account_svr);
-		modal.find('#account_user').val(account_user);
-		modal.find('#account_host').val(account_host);
-		modal.find('#account_pass').val(account_pass);
-		modal.find('#account_hash').val(account_hash);
-		modal.find('#account_grant').val(account_grant);
-		modal.find('#account_grant_with').val(account_grant_with);
-		modal.find('#account_db').val(account_db);
-		modal.find('#account_table').val(account_table);
-		modal.find('#account_use').val(account_use);
-		modal.find('#account_sql').val(account_sql);
-		modal.find('#account_url').val(account_url);
-		modal.find('#account_note').val(account_note);
-		modal.find('#account_del_yn').val(account_del_yn);
-		modal.find('#account_del_dt').val(account_del_dt);
-		modal.find('#account_del_reason').val(account_del_reason);
-		modal.find('#account_del_note').val(account_del_note);
-    })
-    </script>
-    -->
+    <!-- Modal 업데이트 부분 -->
     <form class="" action="{% url 'account_update' %}" method="post" name="deleteForm">
     {% csrf_token %}
 
@@ -408,17 +288,18 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">account detail</h5>
+            <h5 class="modal-title" id="myModalLabel" name="myModalLabel">account update</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
-
+            <!-- hidden id (pk) -->
+            <input class="form-control form-control-sm" id="id" name="id" type="hidden">
             <table class="table table-sm table-hover text-center">
             <tr class="">
                 <td class="bg-dark text-white align-middle" style="width: 12%">생성일</td>
                 <td style="width: 38%"><input class="form-control form-control-sm" id="account_create_dt" name="account_create_dt" type="text"></td>
                 <td class="bg-dark text-white align-middle" style="width: 12%">변경일</td>
-                <td style="width: 38%"><input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text"></td>
+                <td style="width: 38%"><input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text" readonly></td>
             </tr>
             <tr>
                 <td class="bg-dark text-white align-middle" style="width: 12%">만료일</td>
@@ -442,7 +323,7 @@
                 <td class="bg-dark text-white align-middle" style="width: 12%">패스워드</td>
                 <td style="width: 38%"><input class="form-control form-control-sm" id="account_pass" name="account_pass" type="text"></td>
                 <td class="bg-dark text-white align-middle" style="width: 12%">해쉬</td>
-                <td style="width: 38%"><input class="form-control form-control-sm" id="account_hash" name="account_hash" type="text"></td>
+                <td style="width: 38%"><input class="form-control form-control-sm" id="account_hash" name="account_hash" type="text" readonly></td>
             </tr>
             <tr>
                 <td class="bg-dark text-white align-middle" style="width: 12%">권한</td>
@@ -465,8 +346,9 @@
             <tr class="">
                 <td class="bg-dark text-white align-middle" style="width: 12%">SQL</td>
                 <td colspan="3" style="width: 38%">
+                    <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly>
+                    <!--
                     <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" onclick="copy_to_clipboard()">
-                    <!-- 클립보드 복사 -->
                     <script>
                         function copy_to_clipboard() {
                             var copyText = document.getElementById("account_sql");
@@ -474,6 +356,7 @@
                             document.execCommand("Copy");
                         }
                     </script>
+                    -->
 
                 </td>
             </tr>
@@ -500,6 +383,7 @@
 		var account_requestor = button.data('account_requestor');
 		var account_svr = button.data('account_svr');
 		var account_user = button.data('account_user');
+		var account_devteam = button.data('account_devteam');
 		var account_host = button.data('account_host');
 		var account_pass = button.data('account_pass');
 		var account_hash = button.data('account_hash');
@@ -507,7 +391,7 @@
 		var account_grant_with = button.data('account_grant_with');
 		var account_db = button.data('account_db');
 		var account_table = button.data('account_table');
-		var account_use = button.data('account_use');
+		var account_info = button.data('account_info');
 		var account_sql = button.data('account_sql');
 		var account_url = button.data('account_url');
 		var account_note = button.data('account_note');
@@ -518,12 +402,14 @@
 
 		var modal = $(this)
 		modal.find('#id').val(id);
+		modal.find('.modal-title').text('account update (id : ' + id + ')');
 		modal.find('#account_create_dt').val(account_create_dt);
 		modal.find('#account_update_dt').val(account_update_dt);
 		modal.find('#account_end_dt').val(account_end_dt);
 	    modal.find('#account_requestor').val(account_requestor);
 		modal.find('#account_svr').val(account_svr);
 		modal.find('#account_user').val(account_user);
+		modal.find('#account_devteam').val(account_devteam);
 		modal.find('#account_host').val(account_host);
 		modal.find('#account_pass').val(account_pass);
 		modal.find('#account_hash').val(account_hash);
@@ -531,7 +417,7 @@
 		modal.find('#account_grant_with').val(account_grant_with);
 		modal.find('#account_db').val(account_db);
 		modal.find('#account_table').val(account_table);
-		modal.find('#account_use').val(account_use);
+		modal.find('#account_info').val(account_info);
 		modal.find('#account_sql').val(account_sql);
 		modal.find('#account_url').val(account_url);
 		modal.find('#account_note').val(account_note);
@@ -541,135 +427,6 @@
 		modal.find('#account_del_note').val(account_del_note);
     })
     </script>
-
-    <!-- Modal 삭제 부분 BAK -->
-    <!--
-    <form class="" action="{% url 'account_delete' %}" method="post" name="deleteForm">
-    {% csrf_token %}
-
-    <div class="modal fade small" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">account delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-              <table class="table table-sm text-center" style="table-layout: fixed">
-                  <tr class="bg-dark text-white">
-                      <th class="">id(pk)</th>
-                  </tr>
-                  <tr>
-                      <td class="">
-                          <input class="form-control form-control-sm" id="id" name="id" type="text" readonly>
-                      </td>
-                  </tr>
-              </table>
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">코드</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="faq_id" name="faq_id" type="text" readonly>
-                    </td>
-                </tr>
-                </table>
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">타입</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="faq_type" name="faq_type" type="text" readonly>
-                    </td>
-                </tr>
-                </table>
-
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">질문</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="faq_question" name="faq_question" type="text" readonly>
-                    </td>
-                </tr>
-                </table>
-
-                <table class="table table-sm text-center" style="table-layout: fixed">
-                <tr class="bg-dark text-white">
-                    <th class="">답변</th>
-                </tr>
-                <tr>
-                    <td class="">
-                        <input class="form-control form-control-sm" id="faq_answer" name="faq_answer" type="text" readonly>
-                    </td>
-                </tr>
-                </table>
-                <p class="text-right">삭제 하시겠습니까?　</p>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-sm btn-outline-primary">확인</button>
-            <button type="" class="btn btn-sm btn-outline-danger" data-dismiss="modal">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    </form>
-    <script>
-    $('#modal_delete').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-		var id = button.data('id');
-		var account_create_dt = button.data('account_create_dt');
-		var account_update_dt = button.data('account_update_dt');
-		var account_end_dt = button.data('account_end_dt');
-		var account_requestor = button.data('account_requestor');
-		var account_svr = button.data('account_svr');
-		var account_user = button.data('account_user');
-		var account_host = button.data('account_host');
-		var account_pass = button.data('account_pass');
-		var account_hash = button.data('account_hash');
-		var account_grant = button.data('account_grant');
-		var account_grant_with = button.data('account_grant_with');
-		var account_db = button.data('account_db');
-		var account_table = button.data('account_table');
-		var account_use = button.data('account_use');
-		var account_sql = button.data('account_sql');
-		var account_url = button.data('account_url');
-		var account_note = button.data('account_note');
-		var account_del_yn = button.data('account_del_yn');
-		var account_del_dt = button.data('account_del_dt');
-		var account_del_reason = button.data('account_del_reason');
-		var account_del_note = button.data('account_del_note');
-
-		var modal = $(this)
-		modal.find('#id').val(id
-		modal.find('#account_create_dt').val(account_create_dt);
-		modal.find('#account_update_dt').val(account_update_dt);
-		modal.find('#account_end_dt').val(account_end_dt);
-		modal.find('#account_requestor').val(account_requestor);
-		modal.find('#account_svr').val(account_svr);
-		modal.find('#account_user').val(account_user);
-		modal.find('#account_host').val(account_host);
-		modal.find('#account_pass').val(account_pass);
-		modal.find('#account_hash').val(account_hash);
-		modal.find('#account_grant').val(account_grant);
-		modal.find('#account_grant_with').val(account_grant_with);
-		modal.find('#account_db').val(account_db);
-		modal.find('#account_table').val(account_table);
-		modal.find('#account_use').val(account_use);
-		modal.find('#account_sql').val(account_sql);
-		modal.find('#account_url').val(account_url);
-		modal.find('#account_note').val(account_note);
-		modal.find('#account_del_yn').val(account_del_yn);
-		modal.find('#account_del_dt').val(account_del_dt);
-		modal.find('#account_del_reason').val(account_del_reason);
-		modal.find('#account_del_note').val(account_del_note);
-    })
-    </script>
-    -->
 
     <!-- Modal 삭제 부분 -->
     <form class="" action="{% url 'account_delete' %}" method="post" name="deleteForm">
@@ -683,7 +440,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
-
+            <!-- hidden id (pk) -->
+            <input class="form-control form-control-sm" id="id" name="id" type="hidden">
             <table class="table table-sm table-hover text-center">
             <tr class="">
                 <td class="bg-dark text-white align-middle" style="width: 12%">생성일</td>
@@ -736,16 +494,7 @@
             <tr class="">
                 <td class="bg-dark text-white align-middle" style="width: 12%">SQL</td>
                 <td colspan="3" style="width: 38%">
-                    <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly onclick="copy_to_clipboard()">
-                    <!-- 클립보드 복사 -->
-                    <script>
-                        function copy_to_clipboard() {
-                            var copyText = document.getElementById("account_sql");
-                            copyText.select();
-                            document.execCommand("Copy");
-                        }
-                    </script>
-
+                    <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly>
                 </td>
             </tr>
             <tr class="">
@@ -783,6 +532,7 @@
 		var account_requestor = button.data('account_requestor');
 		var account_svr = button.data('account_svr');
 		var account_user = button.data('account_user');
+		var account_devteam = button.data('account_devteam');
 		var account_host = button.data('account_host');
 		var account_pass = button.data('account_pass');
 		var account_hash = button.data('account_hash');
@@ -790,7 +540,7 @@
 		var account_grant_with = button.data('account_grant_with');
 		var account_db = button.data('account_db');
 		var account_table = button.data('account_table');
-		var account_use = button.data('account_use');
+		var account_info = button.data('account_info');
 		var account_sql = button.data('account_sql');
 		var account_url = button.data('account_url');
 		var account_note = button.data('account_note');
@@ -801,12 +551,14 @@
 
 		var modal = $(this)
 		modal.find('#id').val(id);
+		modal.find('.modal-title').text('account delete (id : ' + id + ')');
 		modal.find('#account_create_dt').val(account_create_dt);
 		modal.find('#account_update_dt').val(account_update_dt);
 		modal.find('#account_end_dt').val(account_end_dt);
 	    modal.find('#account_requestor').val(account_requestor);
 		modal.find('#account_svr').val(account_svr);
 		modal.find('#account_user').val(account_user);
+		modal.find('#account_devteam').val(account_devteam);
 		modal.find('#account_host').val(account_host);
 		modal.find('#account_pass').val(account_pass);
 		modal.find('#account_hash').val(account_hash);
@@ -814,7 +566,7 @@
 		modal.find('#account_grant_with').val(account_grant_with);
 		modal.find('#account_db').val(account_db);
 		modal.find('#account_table').val(account_table);
-		modal.find('#account_use').val(account_use);
+		modal.find('#account_info').val(account_info);
 		modal.find('#account_sql').val(account_sql);
 		modal.find('#account_url').val(account_url);
 		modal.find('#account_note').val(account_note);
@@ -889,16 +641,16 @@
             <tr class="">
                 <td class="bg-dark text-white align-middle" style="width: 12%">SQL</td>
                 <td colspan="3" style="width: 38%">
-                    <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly onclick="copy_to_clipboard()">
+                    <input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly onclick="copy_clipboard()">
                     <!-- 클립보드 복사 -->
                     <script>
-                        function copy_to_clipboard() {
+                        function copy_clipboard() {
                             var copyText = document.getElementById("account_sql");
                             copyText.select();
                             document.execCommand("Copy");
+                            alert('sdf');
                         }
                     </script>
-
                 </td>
             </tr>
             </table>
@@ -920,6 +672,7 @@
 		var account_update_dt = button.data('account_update_dt');
 		var account_end_dt = button.data('account_end_dt');
 		var account_requestor = button.data('account_requestor');
+		var account_devteam = button.data('account_devteam');
 		var account_svr = button.data('account_svr');
 		var account_user = button.data('account_user');
 		var account_host = button.data('account_host');
@@ -929,7 +682,7 @@
 		var account_grant_with = button.data('account_grant_with');
 		var account_db = button.data('account_db');
 		var account_table = button.data('account_table');
-		var account_use = button.data('account_use');
+		var account_info = button.data('account_info');
 		var account_sql = button.data('account_sql');
 		var account_url = button.data('account_url');
 		var account_note = button.data('account_note');
@@ -940,12 +693,14 @@
 
 		var modal = $(this)
 		modal.find('#id').val(id);
+		modal.find('.modal-title').text('account detail (id : ' + id + ')');
 		modal.find('#account_create_dt').val(account_create_dt);
 		modal.find('#account_update_dt').val(account_update_dt);
 		modal.find('#account_end_dt').val(account_end_dt);
 	    modal.find('#account_requestor').val(account_requestor);
 		modal.find('#account_svr').val(account_svr);
 		modal.find('#account_user').val(account_user);
+		modal.find('#account_devteam').val(account_devteam);
 		modal.find('#account_host').val(account_host);
 		modal.find('#account_pass').val(account_pass);
 		modal.find('#account_hash').val(account_hash);
@@ -953,7 +708,7 @@
 		modal.find('#account_grant_with').val(account_grant_with);
 		modal.find('#account_db').val(account_db);
 		modal.find('#account_table').val(account_table);
-		modal.find('#account_use').val(account_use);
+		modal.find('#account_info').val(account_info);
 		modal.find('#account_sql').val(account_sql);
 		modal.find('#account_url').val(account_url);
 		modal.find('#account_note').val(account_note);

@@ -28,7 +28,7 @@ urlpatterns = [
     path('adminAccount/delete/', adminAccount.views.account_delete, name='account_delete'),
 
     # account test
-    path('adminAccount/select/', adminAccount.views.account_select, name='account_select1'),
+    path('adminAccount/selectDel/', adminAccount.views.account_selectDel, name='account_selectDel'),
 
 
     #########################################################################
