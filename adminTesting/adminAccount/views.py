@@ -30,7 +30,7 @@ def account(request):
             account_requestor__startswith=account_requestor,
             account_devteam__startswith=account_devteam,
             account_svr__startswith=account_svr,
-            account_user__startswith=account_user,
+            account_user__contains=account_user,
             account_host__startswith=account_host,
             account_grant__contains=account_grant,
             account_db__startswith=account_db,
@@ -40,19 +40,33 @@ def account(request):
 
         ).order_by('-id')
 
-        paginator = Paginator(account_list, 10)
         page = request.GET.get('page')
+        pagelist = request.GET.get('pagelist')
+
+        if pagelist is None:
+            pagelist = 10
+
+        print(pagelist)
+        paginator = Paginator(account_list, pagelist)
         accounts = paginator.get_page(page)
-        context = {'accounts': accounts}
+        context = {'accounts': accounts, 'pagelist': pagelist}
         return render(request, 'adminAccount.html', context)
 
     else:
         #account_list = Account.objects.all().order_by('-id')
-        account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
-        paginator = Paginator(account_list, 10)
         page = request.GET.get('page')
+        pagelist = request.GET.get('pagelist')
+
+        if pagelist is None:
+            pagelist = 10
+
+        #print("test" + pagelist)
+        print(pagelist)
+
+        account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
+        paginator = Paginator(account_list, pagelist)
         accounts = paginator.get_page(page)
-        context = {'accounts' : accounts}
+        context = {'accounts': accounts, 'pagelist': pagelist}
         return render(request, 'adminAccount.html', context)
 
 
@@ -163,7 +177,7 @@ def account_fast_select(request):
         account_user = request.POST['account_user']
         #print("input val : " + account_user)
         account_list = Account.objects.filter(
-            account_user__startswith=account_user,
+            account_user__contains=account_user,
             account_del_yn = 'N'  # 계정 삭제여부
         ).order_by('-id')
 

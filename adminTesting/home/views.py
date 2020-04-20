@@ -9,6 +9,8 @@ from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, 
 from .models import *
 from .forms import FaqForm
 
+
+
 # Create your views here.
 def index(request):
     faq_list = Faq.objects.all()
@@ -37,6 +39,8 @@ def test(request):
             faq_question__startswith=faq_question,
             faq_answer__startswith=faq_answer
         ).order_by('-id')
+
+        #faq_list = Faq.objects.raw('SELECT id, faq_id, faq_type, PASSWORD(faq_question) as faq_question, faq_answer FROM home_faq order by 1 desc')
 
         paginator = Paginator(faq_list, 10)
         page = request.GET.get('page')

@@ -5,67 +5,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 </head>
 <body>
     {% block content %}
 
-    <div class="admin1">
-
-        <div class="admin1">
-            <h1>adminAccount Select Page</h1>
-            <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.<br>Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.</p>
-        </div>
-
-        <div class="test_1">
-            <p><a class="btn11" href="/home">Go main</a>,
-            <a class="btn11" href="http://google.com">Go google</a></p>
-        </div>
-
-    </div>
-
-    <div class="query_menu my-1 p-1 border rounded small">
+    <!-- 검색란 -->
+    <div class="query_menu p-1 border rounded small">
         << 검색란 >>
         <table class="table table-sm text-center" style="table-layout: fixed">
         <tr class="bg-dark text-white">
             <!--<th class="">서버/호스트</th>-->
             <th class="">코드</th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
-            <th class=""></th>
+            <th class="">타입</th>
+            <th class="">질문</th>
+            <th class="">답변</th>
             <th class=""></th>
         </tr>
         <tr>
-            <form class="form-inline" action="{$ url 'test1' %}" method='post'>
+            <form class="form-inline" action="{% url 'test_select' %}" method="post">
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="v_id" name="v_id" type="text" placeholder="" value="{{ current_val }}" />
+                <input class="form-control form-control-sm" id="faq_id" name="faq_id" type="text" placeholder="" />
             </td>
             <td class="">
-                <button class="btn btn-outline-primary" type="submit">검색</button>
+                <input class="form-control form-control-sm" id="faq_type" name="faq_type" type="text" placeholder="" />
             </td>
             <td class="">
-
+                <input class="form-control form-control-sm" id="faq_question" name="faq_question" type="text" placeholder="" />
             </td>
             <td class="">
+                <input class="form-control form-control-sm" id="faq_answer" name="faq_answer" type="text" placeholder="" />
             </td>
             <td class="">
-            </td>
-            <td class="">
-            </td>
-            <td class="">
-            </td>
-            <td class="">
+                <button class="btn btn-outline-primary btn-sm" type="submit">검색</button>
             </td>
 
             </form>
@@ -73,35 +46,131 @@
         </table>
     </div>
 
-    <br>
+    <!-- 입력란 -->
+    <div class="query_menu my-1 p-1 border rounded small">
+        << 입력란 >>
+        <table class="table table-sm text-center" style="table-layout: fixed">
+        <tr class="bg-dark text-white">
+            <!--<th class="">서버/호스트</th>-->
+            <th class="">코드</th>
+            <th class="">타입</th>
+            <th class="">질문</th>
+            <th class="">답변</th>
+            <th class=""></th>
+        </tr>
+        <tr>
+            <form class="form-inline" action="" method='' name="insertForm">
+            {% csrf_token %}
+
+            <td class="">
+                <input class="form-control form-control-sm" id="faq_id" name="faq_id" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="faq_type" name="faq_type" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="faq_question" name="faq_question" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="faq_answer" name="faq_answer" type="text" placeholder="" />
+            </td>
+            <td class="">
+                <button class="btn btn-outline-danger btn-sm" onclick="insertBox();" type="submit">입력</button>
+
+                    <script type="text/javascript">
+                        function insertBox() {
+                            var retVal = confirm("입력하시겠습니까?");
+                            if (retVal == true ){
+                                var insertForm = document.insertForm;
+                                insertForm.action="{% url 'test_insert' %}";
+                                insertForm.method="post";
+                                insertForm.submit();
+                            }else{
+                                return;
+                            }
+                        }
+                    </script>
+
+            </td>
+
+            </form>
+        </tr>
+        </table>
+    </div>
+
+    <!-- 결과란 --> <br>
     <div class="board small">
         << 결과란 >>
-        <!--<table class="table table-striped table-sm">-->
         <table class="table table-sm table-hover">
             <tr class="bg-dark text-white">
-                <th> 번호</th>
-                <th> 코드</th>
-                <th> 타입</th>
-                <th> 질문</th>
-                <th> 답변</th>
+                <th>번호</th>
+                <th>코드</th>
+                <th>타입</th>
+                <th>질문</th>
+                <th>답변</th>
             </tr>
             {% for faq in faqs %}
             <tr>
-                <td>{{ faq.id }}</td>
-                <td>{{ faq.faq_id }}</td>
-                <td>{{ faq.faq_type }}</td>
-                <td>{{ faq.faq_question }}</td>
-                <td>{{ faq.faq_answer }}</td>
+                <td>
+		            <a class="" href="#" id="faq_pk" name="faq_pk" data-toggle="dropdown" style="color:black">
+                    {{ faq.id }}
+                    </a>
+
+			        <div class="dropdown-menu">
+                        <!-- 수정, 삭제 메뉴바. modal 구현 -->
+                        <a class="dropdown-item small" href="" data-toggle="modal"
+                           data-target="#modal_update"
+                           data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}">수정</a>
+
+                        <a class="dropdown-item small" href="" data-toggle="modal"
+                           data-target="#modal_delete"
+                           data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}">삭제</a>
+                    </div>
+
+                </td>
+                <td data-toggle="modal" data-target="#modal_update" data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}" style = "cursor:pointer;">
+                    {{ faq.faq_id }}</td>
+                <td data-toggle="modal" data-target="#modal_update" data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}" style = "cursor:pointer;">
+                    {{ faq.faq_type }}</td>
+                <td data-toggle="modal" data-target="#modal_update" data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}" style = "cursor:pointer;">
+                    {{ faq.faq_question }}</td>
+                <td data-toggle="modal" data-target="#modal_update" data-id="{{ faq.id }}"
+                           data-faq_id="{{ faq.faq_id }}"
+                           data-faq_type="{{ faq.faq_type }}"
+                           data-faq_question="{{ faq.faq_question }}"
+                           data-faq_answer="{{ faq.faq_answer }}" style = "cursor:pointer;">
+                    {{ faq.faq_answer }}
+                </td>
             </tr>
             {% endfor %}
         </table>
     </div>
 
-    <span class="step-links">
-
+    <!-- Page Navy -->
+    <span class="step-links small">
     	{% if faqs.has_previous %}
-		    <a href="?page=1">&laquo; first</a>
-		    <a href="?page={{ faqs.previous_page_number }}">previous</a>
+		    <a href="?page=1">&laquo; 맨 처음</a>
+		    <a href="?page={{ faqs.previous_page_number }}">이전</a>
 		{% endif %}
 
 		<span class="current">
@@ -109,11 +178,196 @@
 		</span>
 
 		{% if faqs.has_next %}
-			<a href="?page={{ faqs.next_page_number }}">next</a>
-			<a href="?page={{ faqs.paginator.num_pages }}">last &raquo;</a>
+			<a href="?page={{ faqs.next_page_number }}">다음</a>
+			<a href="?page={{ faqs.paginator.num_pages }}">마지막 &raquo;</a>
 		{% endif %}
 	</span>
 
+    <!-- Modal 업데이트 부분 -->
+    <form class="" action="{% url 'test_update' %}" method="post" name="updateForm">
+    {% csrf_token %}
+    <div class="modal fade small" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">faq update</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-sm text-center" style="table-layout: fixed">
+                  <tr class="bg-dark text-white">
+                      <th class="">id(pk)</th>
+                  </tr>
+                  <tr>
+                      <td class="">
+                          <input class="form-control form-control-sm" id="id" name="id" type="text">
+                      </td>
+                  </tr>
+              </table>
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">코드</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_id" name="faq_id" type="text">
+                    </td>
+                </tr>
+                </table>
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">타입</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_type" name="faq_type" type="text">
+                    </td>
+                </tr>
+                </table>
+
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">질문</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_question" name="faq_question" type="text">
+                    </td>
+                </tr>
+                </table>
+
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">답변</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_answer" name="faq_answer" type="text">
+                    </td>
+                </tr>
+                </table>
+                <p class="text-right">수정 하시겠습니까?　</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-outline-primary">확인</button>
+            <button type="" class="btn btn-sm btn-outline-danger" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+    <script>
+    $('#modal_update').on('show.bs.modal', function (event) {
+         var button = $(event.relatedTarget);
+         var id = button.data('id');
+         var faq_id = button.data('faq_id');
+         var faq_type = button.data('faq_type');
+         var faq_question = button.data('faq_question');
+         var faq_answer = button.data('faq_answer');
+
+         var modal = $(this)
+         modal.find('#id').val(id);
+         modal.find('#faq_id').val(faq_id);
+         modal.find('#faq_type').val(faq_type);
+         modal.find('#faq_question').val(faq_question);
+         modal.find('#faq_answer').val(faq_answer);
+    })
+    </script>
+
+    <!-- Modal 삭제 부분 -->
+    <form class="" action="{% url 'test_delete' %}" method="post" name="deleteForm">
+    {% csrf_token %}
+
+    <div class="modal fade small" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">faq delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-sm text-center" style="table-layout: fixed">
+                  <tr class="bg-dark text-white">
+                      <th class="">id(pk)</th>
+                  </tr>
+                  <tr>
+                      <td class="">
+                          <input class="form-control form-control-sm" id="id" name="id" type="text" readonly>
+                      </td>
+                  </tr>
+              </table>
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">코드</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_id" name="faq_id" type="text" readonly>
+                    </td>
+                </tr>
+                </table>
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">타입</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_type" name="faq_type" type="text" readonly>
+                    </td>
+                </tr>
+                </table>
+
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">질문</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_question" name="faq_question" type="text" readonly>
+                    </td>
+                </tr>
+                </table>
+
+                <table class="table table-sm text-center" style="table-layout: fixed">
+                <tr class="bg-dark text-white">
+                    <th class="">답변</th>
+                </tr>
+                <tr>
+                    <td class="">
+                        <input class="form-control form-control-sm" id="faq_answer" name="faq_answer" type="text" readonly>
+                    </td>
+                </tr>
+                </table>
+                <p class="text-right">삭제 하시겠습니까?　</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-outline-primary">확인</button>
+            <button type="" class="btn btn-sm btn-outline-danger" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+    <script>
+    $('#modal_delete').on('show.bs.modal', function (event) {
+         var button = $(event.relatedTarget);
+         var id = button.data('id');
+         var faq_id = button.data('faq_id');
+         var faq_type = button.data('faq_type');
+         var faq_question = button.data('faq_question');
+         var faq_answer = button.data('faq_answer');
+
+         var modal = $(this)
+         modal.find('#id').val(id);
+         modal.find('#faq_id').val(faq_id);
+         modal.find('#faq_type').val(faq_type);
+         modal.find('#faq_question').val(faq_question);
+         modal.find('#faq_answer').val(faq_answer);
+    })
+    </script>
+
     {% endblock %}
+
 </body>
 </html>

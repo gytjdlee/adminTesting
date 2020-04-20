@@ -39,3 +39,15 @@ class Account(models.Model):
 
 	def __str__(self):
 		return self.account_create_dt
+
+class AccountRepository(models.Model):
+	create_dt = models.DateTimeField(default=datetime.now) # 일자
+	repository_team= models.CharField(null=True, max_length=20, default='') # 연관부서
+	repository_name = models.CharField(null=True, max_length=40) # 레포지터리 명
+	repository_url= models.CharField(null=True, max_length=200) # 레포지터리 URL
+	account_user = models.CharField(null=True, max_length=40) # 계정명
+	url = models.CharField(null=True, max_length=100) # JIRA URL
+	info = models.CharField(null=True, max_length=100) # INFO
+
+	def __str__(self):
+		return self.create_dt
