@@ -72,25 +72,25 @@ def test_insert(request):
 
 def test_delete(request):
     if request.method == 'POST':
-        faq = Faq.objects.get(id = request.POST['id'])
-        faq.delete()
+        getObject= Faq.objects.get(id = request.POST['id'])
+        getObject.delete()
         return redirect('/home/test')
 
     return render(request, 'test.html')
 
 def test_update(request):
     if request.method == 'POST':
-        faq = Faq.objects.get(id = request.POST['id']) # pk에 해당하는 업데이트 대상을 가져옴
+        getObject = Faq.objects.get(id = request.POST['id']) # pk에 해당하는 업데이트 대상을 가져옴
         form = FaqForm(request.POST) # 입력값 가져옴
 
         if form.is_valid():
             #print(form.cleaned_data) # 콘솔 찍기. 디버깅
 
-            faq.faq_id = form.cleaned_data['faq_id']
-            faq.faq_type = form.cleaned_data['faq_type']
-            faq.faq_question = form.cleaned_data['faq_question']
-            faq.faq_answer = form.cleaned_data['faq_answer']
-            faq.save()
+            getObject.faq_id = form.cleaned_data['faq_id']
+            getObject.faq_type = form.cleaned_data['faq_type']
+            getObject.faq_question = form.cleaned_data['faq_question']
+            getObject.faq_answer = form.cleaned_data['faq_answer']
+            getObject.save()
 
         return redirect('/home/test')
 

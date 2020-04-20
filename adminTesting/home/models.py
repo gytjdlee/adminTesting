@@ -13,10 +13,3 @@ class Faq(models.Model):
 
     def __str__(self):
         return self.faq_question
-
-class testNum(models.Model):
-    num_id = models.IntegerField()
-    num_id2 = models.IntegerField()
-    num_type = models.CharField(max_length=2, default='Y')
-    num_date = models.DateTimeField(datetime.now())
-
