@@ -184,12 +184,58 @@ def account_fast_select(request):
 
 
 def account_selectDel(request):
-    #faq_list = Faq.objects.filter(faq_id="test@test.com")
-    #paginator = Paginator(faq_list, 10)
-    #page = request.GET.get('page')
-    #faqs = paginator.get_page(page)
-    #context = {'faqs': faqs}
-    return render(request, 'adminAccount_selectDel.html')
+    if request.method == 'POST':
+        account_requestor = request.POST['account_requestor']
+        account_devteam = request.POST['account_devteam']
+        account_svr = request.POST['account_svr']
+        account_user = request.POST['account_user']
+        account_host = request.POST['account_host']
+        account_grant = request.POST['account_grant']
+        account_db = request.POST['account_db']
+        account_table = request.POST['account_table']
+        account_url = request.POST['account_url']
+
+        print("input val : " + account_user)
+
+        account_list = Account.objects.filter(
+            account_requestor__startswith=account_requestor,
+            account_devteam__startswith=account_devteam,
+            account_svr__startswith=account_svr,
+            account_user__contains=account_user,
+            account_host__startswith=account_host,
+            account_grant__contains=account_grant,
+            account_db__startswith=account_db,
+            account_table__startswith=account_table,
+            account_url__contains=account_url,
+            account_del_yn='Y' # 계정 삭제여부
+
+        ).order_by('-id')
+
+        page = request.GET.get('page')
+        pagelist = request.GET.get('pagelist')
+
+        if pagelist is None:
+            pagelist = 10
+
+        print(pagelist)
+        paginator = Paginator(account_list, pagelist)
+        accounts = paginator.get_page(page)
+        context = {'accounts': accounts, 'pagelist': pagelist}
+        return render(request, 'adminAccount_selectDel.html', context)
+
+    else:
+        #account_list = Account.objects.all().order_by('-id')
+        page = request.GET.get('page')
+        pagelist = request.GET.get('pagelist')
+
+        if pagelist is None:
+            pagelist = 10
+
+        account_list = Account.objects.filter(account_del_yn='Y').order_by('-id')
+        paginator = Paginator(account_list, pagelist)
+        accounts = paginator.get_page(page)
+        context = {'accounts': accounts, 'pagelist': pagelist}
+        return render(request, 'adminAccount_selectDel.html', context)
 
 def account_fn_search(request):
     if request.method == 'POST':

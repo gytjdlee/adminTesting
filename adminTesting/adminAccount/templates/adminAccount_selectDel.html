@@ -5,53 +5,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 </head>
 <body>
     {% block content %}
-
+    <!-- 검색란 -->
     <div class="query_menu my-1 p-1 border rounded small">
         << 검색란 >>
         <table class="table table-sm text-center" style="table-layout: fixed">
         <tr class="bg-dark text-white">
             <!--<th class="">서버/호스트</th>-->
-            <th class="">코드</th>
-            <th class="">계정</th>
-            <th class="">패스워드</th>
-            <th class="">생성일</th>
-            <th class="">용도</th>
-            <th class="">요청자</th>
-            <th class="">작업자</th>
-            <th class=""></th>
+            <th class="rounded-left">요청자명</th>
+            <th class="">요청팀</th>
+            <th class="">서버</th>
+            <th class="">아이디</th>
+            <th class="">호스트</th>
+            <th class="">권한</th>
+            <th class="">DB</th>
+            <th class="">TABLE</th>
+            <th class="">URL</th>
+            <th class="rounded-right"></th>
         </tr>
         <tr>
             <!--<form class="form-inline" action="{ url 'adminAccount:adminAccount_fn_search' }" method="POST">-->
-            <form class="form-inline" action="{% url 'account_selectDel' %}" method="POST">
+            <form class="form-inline" action="{% url 'account_selectDel' %}" method="post">
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control" id="var1" name="var1" type="text" placeholder="" value="{{ current_val }}" />
+                <input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_user" name="account_user" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_host" name="account_host" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_grant" name="account_grant" type="text" placeholder="">
             </td>
             <td class="">
-                <input class="form-control" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_db" name="account_db" type="text" placeholder="">
             </td>
             <td class="">
-                    <button class="btn btn-outline-primary" type="submit">검색</button>
+                <input class="form-control form-control-sm" id="account_table" name="account_table" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_url" name="account_url" type="text" placeholder="">
+            </td>
+            <td class="">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">검색</button>
             </td>
 
             </form>
@@ -59,47 +66,310 @@
         </table>
     </div>
 
-    <br>
+    <!-- 결과란 --> <br>
     <div class="board small">
         << 결과란 >>
-        <!--<table class="table table-striped table-sm">-->
+
         <table class="table table-sm table-hover">
             <tr class="bg-dark text-white">
-                <th> 번호</th>
-                <th> 코드</th>
-                <th> 타입</th>
-                <th> 질문</th>
-                <th> 답변</th>
+                <th class="rounded-left">생성일</th>
+                <th>요청자</th>
+                <th>서버</th>
+                <th>아이디</th>
+                <th>호스트</th>
+                <th>권한</th>
+                <th>DB</th>
+                <th>TABLE</th>
+                <th class="rounded-right">URL</th>
             </tr>
-            {% for faq in faqs %}
-            <tr>
-                <td>{{ faq.id }}</td>
-                <td>{{ faq.faq_id }}</td>
-                <td>{{ faq.faq_type }}</td>
-                <td>{{ faq.faq_question }}</td>
-                <td>{{ faq.faq_answer }}</td>
+            {% for account in accounts %}
+
+            <tr data-toggle="modal" data-target="#myModal"
+			    data-id="{{ account.id }}"
+			    data-account_create_dt="{{ account.account_create_dt|date:'Y/m/d H:i:s' }}"
+			    data-account_update_dt="{{ account.account_update_dt|date:'Y/m/d H:i:s' }}"
+			    data-account_end_dt="{{ account.account_end_dt|date:'Y/m/d H:i:s' }}"
+			    data-account_requestor="{{ account.account_requestor }}"
+			    data-account_svr="{{ account.account_svr }}"
+			    data-account_user="{{ account.account_user }}"
+			    data-account_devteam="{{ account.account_devteam}}"
+			    data-account_host="{{ account.account_host }}"
+			    data-account_pass="{{ account.account_pass }}"
+			    data-account_hash="{{ account.account_hash }}"
+			    data-account_grant="{{ account.account_grant }}"
+			    data-account_grant_with="{{ account.account_grant_with }}"
+			    data-account_db="{{ account.account_db }}"
+			    data-account_table="{{ account.account_table }}"
+			    data-account_info="{{ account.account_info}}"
+			    data-account_sql="{{ account.account_sql }}"
+			    data-account_url="{{ account.account_url }}"
+			    data-account_note="{{ account.account_note }}"
+			    data-account_del_yn="{{ account.account_del_yn }}"
+			    data-account_del_dt="{{ account.account_del_dt|date:'Y/m/d H:i:s' }}"
+			    data-account_del_reason="{{ account.account_del_reason }}"
+			    data-account_del_note="{{ account.account_del_note }}" style = "cursor:pointer;">
+                <td style = "width: 10%;">{{ account.account_create_dt|date:'Y/m/d H:i:s' }}</td>
+                <td style = "width: 8%;">{{ account.account_requestor}}</td>
+                <td style = "width: 8%;">{{ account.account_svr }}</td>
+                <td style = "width: 8%;">{{ account.account_user }}</td>
+                <td style = "width: 10%;">{{ account.account_host }}</td>
+                <td style = "width: 20%;">{{ account.account_grant }}</td>
+                <td style = "width: 8%;">{{ account.account_db }}</td>
+                <td style = "width: 18%;">{{ account.account_table }}</td>
+                <td style = "width: 10%;">{{ account.account_url }}</td>
             </tr>
             {% endfor %}
         </table>
     </div>
 
-    <span class="step-links">
 
-    	{% if faqs.has_previous %}
-		    <a href="?page=1">&laquo; first</a>
-		    <a href="?page={{ faqs.previous_page_number }}">previous</a>
-		{% endif %}
+    <!-- Page Navy -->
+	<table>
+	<td>
+		<nav aria-label="Page navigation example">
+  		<ul class="pagination pagination-sm">
+    		{% if accounts.has_previous %}
+			<li class="page-item"><a class="page-link" href="?page=1">&laquo; 맨 처음</a></li>
+			<li class="page-item"><a class="page-link" href="?page={{ accounts.previous_page_number }}">이전</a></li>
+			{% endif %}
 
-		<span class="current">
-		    Page {{ faqs.number }} of {{ faqs.paginator.num_pages }}.
-		</span>
+			<li class="page-item"><a class="page-link" href="#">
+		    Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}
+			</a></li>
 
-		{% if faqs.has_next %}
-			<a href="?page={{ faqs.next_page_number }}">next</a>
-			<a href="?page={{ faqs.paginator.num_pages }}">last &raquo;</a>
-		{% endif %}
-	</span>
+			{% if accounts.has_next %}
+			<li class="page-item"><a class="page-link" href="?page={{ accounts.next_page_number }}">다음</a></li>
+			<li class="page-item"><a class="page-link" href="?page={{ accounts.paginator.num_pages }}">마지막 &raquo;</a></li>
+			{% endif %}
+		</ul>
+		</nav>
+	</td>
+	<td>
+		<div class="form-group">
+		<select class="form-control form-control-sm" id="selectbox" name="selectbox" onchange='location.href="?pagelist=" + this.value'>
+
+			<!-- this.value -->
+			{% if pagelist == 10 %}
+				<option value="10" selected>10개</option>
+				<option value="20">20개</option>
+				<option value="30">30개</option>
+			{% elif pagelist == 20 %}
+				<option value="10">10개</option>
+				<option value="20" selected>20개</option>
+				<option value="30">30개</option>
+			{% elif pagelist == 30 %}
+				<option value="10">10개</option>
+				<option value="20">20개</option>
+				<option value="30" selected>30개</option>
+			{% else %}
+				<option value="10">10개</option>
+				<option value="20">20개</option>
+				<option value="30">30개</option>
+			{% endif %}
+			<!--
+			<option value="10" {% if pagelist == 10 %} selected {% endif %}>10개</option>
+			<option value="20" {% if pagelist == 20 %} selected {% endif %}>20개</option>
+			<option value="30" {% if pagelist == 30 %} selected {% endif %}>30개</option>
+			-->
+		</select>
+  		</div>
+	</td>
+	</table>
+
+
+    <!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header small">
+					<!-- <h4 class="modal-title" id="myModalLabel">Modal title</h4> -->
+
+					<!-- Nav tabs -->
+					<ul class="nav nav-pills" role="tablist">
+						<li>
+							<a class="nav-link active btn-outline-dark" href="#selectTab" aria-controls="selectTab" role="tab" aria-selected="true" data-toggle="tab">상세</a>
+						</li>
+					</ul>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+
+				<!-- Modal Body -->
+				<div class="modal-body small">
+					<div role="tabpanel">
+
+						<!-- Modal Tab panes -->
+						<div class="tab-content">
+
+							<!-- Modal Select -->
+							<div role="tabpanel" class="tab-pane active fade show" id="selectTab">
+
+								<table class="table table-sm table-hover text-center">
+								<tr class="">
+									<td class="bg-dark text-white align-middle" style="width: 12%">생성일</td>
+									<td style="width: 38%"><input class="form-control form-control-sm" id="account_create_dt" name="account_create_dt" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle" style="width: 12%">변경일</td>
+									<td style="width: 38%"><input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text" readonly></td>
+								</tr>
+								<tr>
+									<td class="bg-dark text-white align-middle">만료일</td>
+									<td><input class="form-control form-control-sm" id="account_end_dt" name="account_end_dt" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">요청자명</td>
+									<td><input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" readonly></td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">요청팀</td>
+									<td><input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">호스트명</td>
+									<td><input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" readonly></td>
+								</tr>
+								<tr>
+									<td class="bg-dark text-white align-middle">아이디</td>
+									<td><input class="form-control form-control-sm" id="account_user" name="account_user" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">허용호스트</td>
+									<td><input class="form-control form-control-sm" id="account_host" name="account_host" type="text" readonly></td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">패스워드</td>
+									<td><input class="form-control form-control-sm" id="account_pass" name="account_pass" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">해쉬</td>
+									<td><input class="form-control form-control-sm" id="account_hash" name="account_hash" type="text" readonly></td>
+								</tr>
+								<tr>
+									<td class="bg-dark text-white align-middle">권한</td>
+									<td><input class="form-control form-control-sm" id="account_grant" name="account_grant" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">grant with</td>
+									<td><input class="form-control form-control-sm" id="account_grant_with" name="account_grant_with" type="text" readonly></td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">db</td>
+									<td><input class="form-control form-control-sm" id="account_db" name="account_db" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">table</td>
+									<td><input class="form-control form-control-sm" id="account_table" name="account_table" type="text" readonly></td>
+								</tr>
+								<tr>
+									<td class="bg-dark text-white align-middle">용도</td>
+									<td><input class="form-control form-control-sm" id="account_info" name="account_info" type="text" readonly></td>
+									<td class="bg-dark text-white align-middle">URL</td>
+									<td><input class="form-control form-control-sm" id="account_url" name="account_url" type="text" readonly></td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">SQL</td>
+									<td colspan="3">
+										<input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" data-placement="bottom" title="클릭 : 클립보드 복사" data-toggle="tooltip" readonly onclick="copy_clipboard()">
+										<!-- 클립보드 복사 -->
+										<script>
+											function copy_clipboard() {
+												var copyText = document.getElementById("account_sql");
+												copyText.select();
+												document.execCommand("Copy");
+											}
+											$(function(){
+												$('#account_sql').tooltip({
+													animation: true,
+													container: false,
+													delay: {show:50, hide:50},
+													html: false,
+													selector: false,
+													template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+													trigger: 'hover focus',
+													viewport: { selector: 'body', padding: 0 },
+												});
+											});
+										</script>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">삭제일</td>
+									<td colspan="3">
+										<input class="form-control form-control-sm" id="account_del_dt" name="account_del_dt" type="text" readonly>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">삭제 사유</td>
+									<td colspan="3">
+										<input class="form-control form-control-sm" id="account_del_reason" name="account_del_reason" type="text" readonly>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bg-dark text-white align-middle">비고 (URL)</td>
+									<td colspan="3">
+										<input class="form-control form-control-sm" id="account_del_note" name="account_del_note" type="text" readonly>
+									</td>
+								</tr>
+								</table>
+								<p class="text-right">상세 정보입니다.</p>
+
+								<div class="modal-footer">
+                                    <button type="" class="btn btn-sm btn-outline-primary" data-dismiss="modal">확인</button>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal window option script -->
+    <script>
+    $('#myModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+		var id = button.data('id');
+		var account_create_dt = button.data('account_create_dt');
+		var account_update_dt = button.data('account_update_dt');
+		var account_end_dt = button.data('account_end_dt');
+		var account_requestor = button.data('account_requestor');
+		var account_svr = button.data('account_svr');
+		var account_user = button.data('account_user');
+		var account_devteam = button.data('account_devteam');
+		var account_host = button.data('account_host');
+		var account_pass = button.data('account_pass');
+		var account_hash = button.data('account_hash');
+		var account_grant = button.data('account_grant');
+		var account_grant_with = button.data('account_grant_with');
+		var account_db = button.data('account_db');
+		var account_table = button.data('account_table');
+		var account_info = button.data('account_info');
+		var account_sql = button.data('account_sql');
+		var account_url = button.data('account_url');
+		var account_note = button.data('account_note');
+		var account_del_yn = button.data('account_del_yn');
+		var account_del_dt = button.data('account_del_dt');
+		var account_del_reason = button.data('account_del_reason');
+		var account_del_note = button.data('account_del_note');
+
+        var modal = $('#selectTab')
+		modal.find('#id').val(id);
+		modal.find('#account_create_dt').val(account_create_dt);
+		modal.find('#account_update_dt').val(account_update_dt);
+		modal.find('#account_end_dt').val(account_end_dt);
+	    modal.find('#account_requestor').val(account_requestor);
+		modal.find('#account_svr').val(account_svr);
+		modal.find('#account_user').val(account_user);
+		modal.find('#account_devteam').val(account_devteam);
+		modal.find('#account_host').val(account_host);
+		modal.find('#account_pass').val(account_pass);
+		modal.find('#account_hash').val(account_hash);
+		modal.find('#account_grant').val(account_grant);
+		modal.find('#account_grant_with').val(account_grant_with);
+		modal.find('#account_db').val(account_db);
+		modal.find('#account_table').val(account_table);
+		modal.find('#account_info').val(account_info);
+		modal.find('#account_sql').val(account_sql);
+		modal.find('#account_url').val(account_url);
+		modal.find('#account_note').val(account_note);
+		modal.find('#account_del_yn').val(account_del_yn);
+		modal.find('#account_del_dt').val(account_del_dt);
+		modal.find('#account_del_reason').val(account_del_reason);
+		modal.find('#account_del_note').val(account_del_note);
+
+    })
+    </script>
 
     {% endblock %}
 </body>
-</html>
+</html
