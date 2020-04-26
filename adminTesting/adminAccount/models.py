@@ -52,3 +52,9 @@ class AccountRepository(models.Model):
 	def __str__(self):
 		return self.create_dt
 
+class Account_hash(models.Model):
+	password_encrypt = models.CharField(blank=True, max_length=100, default='', unique=True) # 패스워드 암호화
+	password_hash = models.CharField(blank=True, max_length=250, default='') # 패스워드 해시
+
+	def __str__(self):
+		return self.password_encrypt

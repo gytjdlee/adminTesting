@@ -25,6 +25,12 @@ def home(request):
 
 
 # 테스팅 용도
+def get_key():
+    with open('static/other/keyfile.lst', encoding='utf-8') as txtfile:
+        for row in txtfile.readlines():
+            key = row
+
+    return key
 
 def test(request):
     if request.method == 'POST':

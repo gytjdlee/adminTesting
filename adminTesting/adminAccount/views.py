@@ -5,12 +5,25 @@ from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
+from django.db import connection
 
 from .models import *
 from .forms import *
 
 # faq_list = Faq.objects.filter(faq_id="test@test.com")
 # Create your views here.
+
+################# Encrypt key
+def get_key():
+    with open('static/other/keyfile.lst', encoding='utf-8') as txtfile:
+        for row in txtfile.readlines():
+            key = row
+
+    return key
+
+
+
+#Account
 
 def account(request):
     if request.method == 'POST':
@@ -82,8 +95,22 @@ def account_insert(request):
             " to " + "'" + form.cleaned_data['account_user'] + "'@'" + form.cleaned_data['account_host'] + \
             "' identified by '" + form.cleaned_data['account_pass'] + "';"
 
+            # 패스워드 암호화 적용
+            query = "insert into adminaccount_account_hash(password_encrypt,password_hash)" \
+                    "values (HEX(AES_ENCRYPT('" + form.cleaned_data['account_pass'] + "', '" + get_key() + "')), \
+                     password('" + form.cleaned_data['account_pass'] + "'))"
+            print("query : " + query)
+
+            cursor = connection.cursor()
+            cursor.execute(query)
+
             # ex) /*ARCG-9999*/grant select, insert, update, delete on admdb.* to 'deal_detail'@'10.11.12.%' identified by 'password';
             #print(modify_form.account_sql)
+
+            # 암복호화
+            # select HEX(AES_ENCRYPT('Manger!1', '암복호키'));
+            # select AES_DECRYPT(UNHEX('23D5F3AF5041ABADF64E89F1FCE0A994'), '암복호키');
+            # grant select on admdb.* to 'test'@'10.11.22.%' identified by password '*5CE39A29BB2B3BBE6293BC10E9404F058109A152';
 
             #modify_form.account_sql = form.cleaned_data['account_svr']+' show '+form.cleaned_data['account_user']
             #print("============ 'sql' :" + modify_form.account_sql)
