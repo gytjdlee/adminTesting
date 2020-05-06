@@ -13,3 +13,14 @@ class Faq(models.Model):
 
     def __str__(self):
         return self.faq_question
+
+class Post(models.Model):
+    title = models.CharField(max_length=30)
+    content = models.TextField()
+    read = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
+    updated_date = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __str__(self):
+        return self.title

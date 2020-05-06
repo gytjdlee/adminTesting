@@ -14,7 +14,7 @@ from .forms import FaqForm
 # Create your views here.
 def index(request):
     faq_list = Faq.objects.all()
-    paginator = Paginator(faq_list, 10)
+    paginator = Paginator(faq_list, 15)
     page = request.GET.get('page')
     faqs = paginator.get_page(page)
     context = {'faqs' : faqs}
@@ -48,7 +48,7 @@ def test(request):
 
         #faq_list = Faq.objects.raw('SELECT id, faq_id, faq_type, PASSWORD(faq_question) as faq_question, faq_answer FROM home_faq order by 1 desc')
 
-        paginator = Paginator(faq_list, 10)
+        paginator = Paginator(faq_list, 15)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)
         context = {'faqs': faqs}
@@ -56,7 +56,7 @@ def test(request):
 
     else:
         faq_list = Faq.objects.all().order_by('-id')
-        paginator = Paginator(faq_list, 10)
+        paginator = Paginator(faq_list, 15)
         page = request.GET.get('page')
         faqs = paginator.get_page(page)
         context = {'faqs': faqs}
@@ -111,7 +111,7 @@ def test_update(request):
 def test1(request):
     #faq_list = Faq.objects.filter(faq_id="test@test.com")
     faq_list = Faq.objects.all()
-    paginator = Paginator(faq_list, 10)
+    paginator = Paginator(faq_list, 15)
     page = request.GET.get('page')
     faqs = paginator.get_page(page)
     context = {'faqs': faqs}
@@ -120,3 +120,58 @@ def test1(request):
 def testGraph(request):
     return render(request, 'testGraph.html')
 
+
+# AJAX UnLimit Scrolling Test
+
+def post_list(request):
+    post_list = Post.objects.all().order_by('-id')
+    paginator = Paginator(post_list, 15)
+    page = request.POST.get('page')
+
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+
+    context = {'post_list':post_list}
+    return render(request, 'post_list.html', context)
+
+def post_list_ajax(request): #Ajax 로 호출하는 함수
+    post_list = Post.objects.all().order_by('-id')
+    paginator = Paginator(post_list, 15)
+    page = request.POST.get('page')
+
+    #faqs = paginator.get_page(page)
+
+    try:
+        if int(page) > paginator.num_pages:
+            post_list = Post.objects.filter(id=30000)
+        else:
+            post_list = paginator.get_page(page)
+
+    except PageNotAnInteger:
+        post_list = paginator.get_page(1)
+    except EmptyPage:
+        post_list = paginator.get_page(paginator.num_pages)
+
+    context = {'post_list':post_list}
+    return render(request, 'post_list_ajax.html', context) #Ajax 로 호출하는 템플릿은 _ajax로 표시
+
+
+def post_detail(request,post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.read += 1
+    post.save()
+    context = {'post':post}
+    return render(request, 'post/post_detail.html', context)
+
+def post_search(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+    else:
+        search_text = ''
+    post_list = Post.objects.filter(Q(title__contains = search_text) | Q(content__contains = search_text))
+    context = { 'post_list': post_list }
+    return render(request, 'post/ajax_result.html', context)

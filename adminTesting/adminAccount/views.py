@@ -57,9 +57,9 @@ def account(request):
         pagelist = request.GET.get('pagelist')
 
         if pagelist is None:
-            pagelist = 10
+            pagelist = 15
 
-        print(pagelist)
+        #print(pagelist)
         paginator = Paginator(account_list, pagelist)
         accounts = paginator.get_page(page)
         context = {'accounts': accounts, 'pagelist': pagelist}
@@ -71,10 +71,10 @@ def account(request):
         pagelist = request.GET.get('pagelist')
 
         if pagelist is None:
-            pagelist = 10
+            pagelist = 15
 
         #print("test" + pagelist)
-        print(pagelist)
+        #print(pagelist)
 
         account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
         paginator = Paginator(account_list, pagelist)
@@ -242,9 +242,9 @@ def account_selectDel(request):
         pagelist = request.GET.get('pagelist')
 
         if pagelist is None:
-            pagelist = 10
+            pagelist = 15
 
-        print(pagelist)
+        #print(pagelist)
         paginator = Paginator(account_list, pagelist)
         accounts = paginator.get_page(page)
         context = {'accounts': accounts, 'pagelist': pagelist}
@@ -256,7 +256,7 @@ def account_selectDel(request):
         pagelist = request.GET.get('pagelist')
 
         if pagelist is None:
-            pagelist = 10
+            pagelist = 15
 
         account_list = Account.objects.filter(account_del_yn='Y').order_by('-id')
         paginator = Paginator(account_list, pagelist)

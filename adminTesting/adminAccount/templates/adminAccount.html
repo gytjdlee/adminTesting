@@ -230,20 +230,20 @@
 		<select class="form-control form-control-sm" id="selectbox" name="selectbox" onchange='location.href="?pagelist=" + this.value'>
 
 			<!-- this.value -->
-			{% if pagelist == 10 %}
-				<option value="10" selected>10개</option>
+			{% if pagelist == 15 %}
+				<option value="15" selected>15개</option>
 				<option value="20">20개</option>
 				<option value="30">30개</option>
 			{% elif pagelist == 20 %}
-				<option value="10">10개</option>
+				<option value="15">15개</option>
 				<option value="20" selected>20개</option>
 				<option value="30">30개</option>
 			{% elif pagelist == 30 %}
-				<option value="10">10개</option>
+				<option value="15">15개</option>
 				<option value="20">20개</option>
 				<option value="30" selected>30개</option>
 			{% else %}
-				<option value="10">10개</option>
+				<option value="15">15개</option>
 				<option value="20">20개</option>
 				<option value="30">30개</option>
 			{% endif %}
@@ -270,10 +270,7 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-pills" role="tablist">
 						<li>
-							<a class="nav-link active btn-outline-dark" href="#selectTab" aria-controls="selectTab" role="tab" aria-selected="true" data-toggle="tab">상세</a>
-						</li>
-						<li>
-							<a class="nav-link btn-outline-dark" href="#updateTab" aria-controls="updateTab" role="tab" data-toggle="tab">수정</a>
+							<a class="nav-link active btn-outline-dark" href="#updateTab" aria-controls="updateTab" role="tab" aria-selected="true" data-toggle="tab">수정</a>
 						</li>
 						<li>
 							<a class="nav-link btn-outline-dark" href="#deleteTab" aria-controls="deleteTab" role="tab" data-toggle="tab">삭제</a>
@@ -288,93 +285,6 @@
 
 						<!-- Modal Tab panes -->
 						<div class="tab-content">
-
-							<!-- Modal Select -->
-							<div role="tabpanel" class="tab-pane active fade show" id="selectTab">
-
-								<table class="table table-sm table-hover text-center">
-								<tr class="">
-									<td class="bg-dark text-white align-middle" style="width: 12%">생성일</td>
-									<td style="width: 38%"><input class="form-control form-control-sm" id="account_create_dt" name="account_create_dt" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle" style="width: 12%">변경일</td>
-									<td style="width: 38%"><input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text" readonly></td>
-								</tr>
-								<tr>
-									<td class="bg-dark text-white align-middle">만료일</td>
-									<td><input class="form-control form-control-sm" id="account_end_dt" name="account_end_dt" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">요청자명</td>
-									<td><input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" readonly></td>
-								</tr>
-								<tr class="">
-									<td class="bg-dark text-white align-middle">요청팀</td>
-									<td><input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">호스트명</td>
-									<td><input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" readonly></td>
-								</tr>
-								<tr>
-									<td class="bg-dark text-white align-middle">아이디</td>
-									<td><input class="form-control form-control-sm" id="account_user" name="account_user" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">허용호스트</td>
-									<td><input class="form-control form-control-sm" id="account_host" name="account_host" type="text" readonly></td>
-								</tr>
-								<tr class="">
-									<td class="bg-dark text-white align-middle">패스워드</td>
-									<td><input class="form-control form-control-sm" id="account_pass" name="account_pass" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">해쉬</td>
-									<td><input class="form-control form-control-sm" id="account_hash" name="account_hash" type="text" readonly></td>
-								</tr>
-								<tr>
-									<td class="bg-dark text-white align-middle">권한</td>
-									<td><input class="form-control form-control-sm" id="account_grant" name="account_grant" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">grant with</td>
-									<td><input class="form-control form-control-sm" id="account_grant_with" name="account_grant_with" type="text" readonly></td>
-								</tr>
-								<tr class="">
-									<td class="bg-dark text-white align-middle">db</td>
-									<td><input class="form-control form-control-sm" id="account_db" name="account_db" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">table</td>
-									<td><input class="form-control form-control-sm" id="account_table" name="account_table" type="text" readonly></td>
-								</tr>
-								<tr>
-									<td class="bg-dark text-white align-middle">용도</td>
-									<td><input class="form-control form-control-sm" id="account_info" name="account_info" type="text" readonly></td>
-									<td class="bg-dark text-white align-middle">URL</td>
-									<td><input class="form-control form-control-sm" id="account_url" name="account_url" type="text" readonly></td>
-								</tr>
-								<tr class="">
-									<td class="bg-dark text-white align-middle">SQL</td>
-									<td colspan="3">
-										<input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" data-placement="bottom" title="클릭 : 클립보드 복사" data-toggle="tooltip" readonly onclick="copy_clipboard()">
-										<!-- 클립보드 복사 -->
-										<script>
-											function copy_clipboard() {
-												var copyText = document.getElementById("account_sql");
-												copyText.select();
-												document.execCommand("Copy");
-											}
-											$(function(){
-												$('#account_sql').tooltip({
-													animation: true,
-													container: false,
-													delay: {show:50, hide:50},
-													html: false,
-													selector: false,
-													template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-													trigger: 'hover focus',
-													viewport: { selector: 'body', padding: 0 },
-												});
-											});
-										</script>
-									</td>
-								</tr>
-								</table>
-								<p class="text-right">상세 정보입니다.</p>
-
-								<div class="modal-footer">
-                                    <button type="" class="btn btn-sm btn-outline-primary" data-dismiss="modal">확인</button>
-								</div>
-
-							</div>
 
                             <!-- Modal Delete -->
 							<div role="tabpanel" class="tab-pane fade" id="deleteTab">
@@ -461,7 +371,7 @@
 
 
                             <!-- Modal Update-->
-							<div role="tabpanel" class="tab-pane fade" id="updateTab">
+							<div role="tabpanel" class="tab-pane active fade show" id="updateTab">
                                 <form class="" action="{% url 'account_update' %}" method="post" name="updateForm">
                                 {% csrf_token %}
 								<!-- hidden id (pk) -->
@@ -518,7 +428,27 @@
 								<tr class="">
 									<td class="bg-dark text-white align-middle">SQL</td>
 									<td colspan="3">
-										<input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" readonly>
+										<input class="form-control form-control-sm" id="account_sql" name="account_sql" type="text" data-placement="bottom" title="클릭 : 클립보드 복사" data-toggle="tooltip" readonly onclick="copy_clipboard()">
+										<!-- 클립보드 복사 -->
+										<script>
+											function copy_clipboard() {
+												var copyText = document.getElementById("account_sql");
+												copyText.select();
+												document.execCommand("Copy");
+											}
+											$(function(){
+												$('#account_sql').tooltip({
+													animation: true,
+													container: false,
+													delay: {show:50, hide:50},
+													html: false,
+													selector: false,
+													template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+													trigger: 'hover focus',
+													viewport: { selector: 'body', padding: 0 },
+												});
+											});
+										</script>
 									</td>
 								</tr>
 								</table>

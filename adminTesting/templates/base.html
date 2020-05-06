@@ -25,6 +25,9 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+	<!-- echart js -->
+	<script src="{% static 'js/echarts.js' %}"></script>
+
 	<!-- LOCAL Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
 
@@ -100,6 +103,7 @@
       <!--<span class="badge badge-pill bg-light align-text-bottom">7</span>-->
     </a>
     <a class="nav-link small" href="/home/testGraph">Test graph</a>
+	  <a class="nav-link small" href="/home/post">Test ajax (post)</a>
   </nav>
 </div>
 
@@ -140,8 +144,7 @@
 <!-- BOTTOM -->
 <!--<div class="main-bottom">
 main bottom message.
-</div>-->
-
+-->
 
 <!-- 현재 url을 호출하여 active 효과 먹이기 -->
 <script>

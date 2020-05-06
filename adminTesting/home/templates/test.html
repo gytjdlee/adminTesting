@@ -419,7 +419,42 @@
          modal.find('#faq_question').val(faq_question);
          modal.find('#faq_answer').val(faq_answer);
     })
+
+	$(function() {
+		var $win = $(window);
+		var is_loading = false;
+
+		// 매 화면 스크롤마다 호출
+		$win.scroll(function() {
+		// 문서의 끝에 도달했는가?
+		var diff = $(document).height() - $win.height();
+		if ( (!is_loading) && diff == $win.scrollTop() ) {
+			var search_params = new URLSearchParams(window.location.search); // 현재 페이지의 GET인자를 가공
+			var current_page = parseInt(search_params.get('page')) || 1; // GET인자 page를 획득하고 없으면 1을 반환
+			var next_page_url = '?page-' + (current_page + 1); // 다음 페이지를 요청하기 위한 URL 생성
+
+			is_loading = true;
+
+			$.get(next_page_url).
+				done(function(html) {
+					$('#post_list').append(html);
+					history.pushState({}, '', next_page)url);
+				}).
+				fail(function(xhr, textStatus, error) {
+					console.log(textStatus);
+				})
+				.always(function() {
+					console.log("always");
+					is_loading = false;
+				});
+			}
+		});
+	});
+
+
     </script>
+
+
     {% endblock %}
 
 </body>

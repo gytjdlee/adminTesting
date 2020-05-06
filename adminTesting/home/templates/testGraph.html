@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-
 </head>
 <body>
     {% block content %}
@@ -29,14 +28,33 @@
             <a class="btn11" href="http://google.com">Go google</a></p>
         </div>
 
-
     </div>
 
 
 	<!-- Modal windows button open -->
-	<button type="button" class="btn btn-primary btn-lg btn-lg" data-toggle="modal" data-target="#myModal">
-	  Open Modal
-	</button>
+    <div class="buttons">
+    <button type="button" class="btn btn-primary btn-lg btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+    <button type="button" class="btn btn-primary btn-lg btn-lg btnAdd" id="btnAdd" name="btnAdd">add button</button><br><br>
+    </div>
+
+    <script>
+        $(document).ready (function () {
+            $('.btnAdd').click (function () {
+                $('.buttons').append (
+                    '<input type="text" name="txt"> <input type="button" class="btnRemove" value="Remove"><br>'
+                ); // end append
+                $('.btnRemove').on('click', function () {
+                    $(this).prev().remove(); // remove the textbox
+                    $(this).next().remove(); // remove the <br>
+                    $(this).remove(); // remove the button
+                });
+            }); // end click
+        }); // end ready
+    </script>
+
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -10,7 +10,6 @@
 <body>
     {% block content %}
 
-    <div class="test">
 
         <div class="">
             <h1>Welcome to DBA admin page!</h1>
@@ -20,6 +19,194 @@
             </p>
         </div>
 
+    </div>
+
+    <script>
+        $(document).ready (function () {
+            $('.btnAdd').click (function () {
+                $('.buttons').append (
+                    '<input type="text" name="txt"> <input type="button" class="btnRemove" value="Remove"><br>'
+                ); // end append
+                $('.btnRemove').on('click', function () {
+                    $(this).prev().remove(); // remove the textbox
+                    $(this).next().remove(); // remove the <br>
+                    $(this).remove(); // remove the button
+                });
+            }); // end click
+        }); // end ready
+    </script>
+
+    <div class="center">
+        <button type="button" class="btn btn-primary btn-sm btn-lg active" id="charta" name="btnAdd">A chart</button>
+        <button type="button" class="btn btn-primary btn-sm btn-lg " id="chartb" name="btnAdd">B chart</button>
+    </div>
+
+    <div class="row">
+        <div class="col test" id="test" style="height:420px"></div>
+        <div class="col main" id="main" style="height:400px"></div>
+    </div>
+
+    <script>
+        var myChart = echarts.init(document.getElementById('test'));
+        var option = {
+            title: {
+                text: 'Charts Test A'
+            },
+            tooltip: {},
+            legend: {
+                data:['Chart Test A']
+            },
+
+            xAxis: {
+                data: ["ab","cd","ef","gh","ij","kl","mo","pq","rs","tu","vw","xyz"]
+            },
+
+            yAxis: {},
+            series: [{
+                name: 'Chart Test A',
+                type: 'bar',
+                itemStyle:{
+                    color: '#B40404',
+                },
+                data: [5, 20, 36, 10, 10, 20,40,50,60,70,180,10]
+            }]
+        };
+        myChart.setOption(option);
+
+        $('#charta').click(function(){
+            var myChart = echarts.init(document.getElementById('test'));
+            var option = {
+				title: {
+					text: 'Charts Test A'
+				},
+				tooltip: {},
+				legend: {
+					data:['Chart Test A']
+				},
+
+				xAxis: {
+					data: ["ab","cd","ef","gh","ij","kl","mo","pq","rs","tu","vw","xyz"]
+				},
+
+				yAxis: {},
+				series: [{
+					name: 'Chart Test A',
+					type: 'bar',
+                    itemStyle:{
+						color: '#B40404',
+					},
+					data: [5, 20, 36, 10, 10, 20,40,50,60,70,180,10]
+				}]
+			};
+            myChart.setOption(option);
+        });
+
+        $('#chartb').click(function(){
+            var myChart = echarts.init(document.getElementById('test'));
+            var option = {
+				title: {
+					text: 'Charts Test B'
+				},
+				tooltip: {},
+				legend: {
+					data:['Chart Test B']
+				},
+
+				xAxis: {
+					data: ["ab","cd","ef","gh","ij","kl","mo","pq","rs","tu","vw","xyz"]
+				},
+
+				yAxis: {},
+				series: [{
+					name: 'Chart Test B',
+					type: 'bar',
+                    itemStyle:{
+						color: '#0431B4',
+					},
+					data: [305, 430, 536, 610, 710, 520,440,550,690,70,180,10]
+				}]
+			};
+            myChart.setOption(option);
+        });
+
+
+    </script>
+
+    <script>
+
+        var myChart = echarts.init(document.getElementById("main"));
+
+        var option = {
+            title: {
+            	text: 'Charts Test2'
+            },
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'shadow'
+				}
+			},
+			legend: {
+				data: ['abcd', 'efgh', 'ijkl']
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value'
+			},
+			yAxis: {
+				type: 'category',
+				data: ['db1','db2','db3','db4','db5','db6','db7']
+			},
+			series: [
+				{
+					name: 'abcd',
+					type: 'bar',
+					stack: 'stack',
+					itemStyle:{
+						color: '#f8f9fa',
+					},
+					label: {
+						show: false,
+						position: 'insideRight'
+					},
+					data: [80, 350, 720, 120, 390, 530, 450]
+				},
+				{
+					name: 'efgh',
+					type: 'bar',
+					stack: 'stack',
+					itemStyle:{
+						color: '#000000',
+					},
+					label: {
+						show: false,
+						position: 'insideRight'
+					},
+					data: [160, 182, 221, 244, 180, 450, 240]
+				},
+				{
+					name: 'ijkl',
+					type: 'bar',
+					stack: 'stack',
+					itemStyle:{
+						color: '#f8f9fa',
+					},
+					label: {
+						show: false,
+						position: 'insideRight'
+					},
+					data: [220, 182, 191, 234, 290, 330, 310]
+				}
+			]
+		};
+                 // just use the specified configuration items and data charts.
+        myChart.setOption(option);
+    </script>
     </div>
 
     {% endblock %}

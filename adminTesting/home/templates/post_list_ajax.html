@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+{% if post_list %}
+
+{% for post in post_list %}
+
+<div class="col-xs-12 col-sm-6">
+<h2>{{ post.title }}</h2>
+<p>{{ post.content | truncatewords:"10" }}</p>
+<p><a class="btn btn-default" href="{% url 'post_detail' post.id %}" role="button">View details »</a></p>
+</div>
+{% endfor %}
+
+{% else %}
+<p>No Data</p>
+{% endif %}
+-->
+
+{% if post_list %}
+    <table class="small table table-sm table-hover">
+        {% for post in post_list %}
+        <tr class="">
+            <td style = "width: 10%;">{{ post.id}}</td>
+            <td style = "width: 20%;">{{ post.title }}</td>
+            <td style = "width: 20%;">{{ post.content | truncatewords:"50" }}</td>
+            <td style = "width: 10%;">{{ post.read }}</td>
+            <td style = "width: 10%;">{{ post.likes }}</td>
+            <td style = "width: 15%;">{{ post.updated_date|date:'Y/m/d H:i:s' }}</td>
+            <td style = "width: 15%;">{{ post.created_date|date:'Y/m/d H:i:s' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+</body>
+</html>

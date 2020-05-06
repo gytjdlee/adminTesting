@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+<div class="">
+{% csrf_token %}
+    <!--
+<input type="text" class="form-control input-md" id="searchID" placeholder="검색어를 입력하시요." autofocus>
+</div>
+<div class="col-sm-2">
+<button type="button" class="btn btn-primary btn-md btn-block">Search
+</div>
+<br />
+<url id="search_result_ajax">
+</url>
+<br />
+-->
+
+<script type="text/javascript">
+    var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
+    $(function() {
+        $('#searchID').keyup(function(){
+        $.ajax( {
+            type : 'POST',
+            url: "{% url 'post_search' %}",
+            data: {
+            'search_text': $('#searchID').val(),
+            'csrfmiddlewaretoken': token
+        },
+        success: searchSuccess,
+        dataType: 'html'
+        });
+        });
+    });
+
+    function searchSuccess(data, textStatus, jqXHR) {
+        $('#search_result_ajax').html(data);
+    }
+</script>
+</div>
+
+<!-- 리스트 뿌리기 -->
+<div class="board small">
+
+    <table class="table table-sm table-hover">
+
+        <tr class="bg-dark text-white">
+            <th>id</th>
+            <th>title</th>
+            <th>content</th>
+            <th>read</th>
+            <th>likes</th>
+            <th>updated_date</th>
+            <th>created_date</th>
+        </tr>
+    {% for post in post_list %}
+        <tr>
+            <td style = "width: 10%;">{{ post.id }}</td>
+            <td style = "width: 20%;">{{ post.title }}</td>
+            <td style = "width: 20%;">{{ post.content | truncatewords:"50" }}</td>
+            <td style = "width: 10%;">{{ post.read }}</td>
+            <td style = "width: 10%;">{{ post.likes }}</td>
+            <td style = "width: 15%;">{{ post.updated_date|date:'Y/m/d H:i:s' }}</td>
+            <td style = "width: 15%;">{{ post.created_date|date:'Y/m/d H:i:s' }}</td>
+        </tr>
+
+    <!--<p><a class="btn btn-default" href="{% url 'post_detail' post.id %}" role="button">View details »</a></p> -->
+    {% endfor %}
+
+    </table>
+</div>
+
+<div class="" id="post_list_ajax"></div> <!--**Ajax 결과물을 추가할 곳-->
+<input id="page" type="hidden" value="2"> <!--**페이지 정보를 입력할 곳-->
+<button id="callmorepost" type="button" class="btn btn-primary btn-sm btn-block">더 보기</button> <!--**페이지 스크롤 이벤트가 작동하지 않을 경우 클릭함.-->
+
+<script>
+    $('#callmorepost').click(function(){
+        var page = $("#page").val();
+        callMorePostAjax(page);
+        $("#page").val(parseInt(page)+1);
+    });
+
+    $(window).scroll(function(){
+        var scrollHeight = $(window).scrollTop() + $(window).height();
+        var documentHeight = $(document).height();
+
+        if (scrollHeight + 100 >= documentHeight){
+            var page = $("#page").val();
+            callMorePostAjax(page);
+            $("#page").val(parseInt(page)+1);
+        }
+    });
+
+    function callMorePostAjax(page) {
+        $.ajax( {
+        type : 'POST',
+        url: "{% url 'post_list_ajax' %}",
+        data: {
+        'page': page,
+        'csrfmiddlewaretoken': token
+        },
+        success: addMorePostAjax,
+        dataType: 'html'
+        });
+    }
+
+    function addMorePostAjax(data, textStatus, jqXHR) {
+        $('#post_list_ajax').append(data);
+    }
+</script>
+{% endblock %}
+
+</body>
+</html>

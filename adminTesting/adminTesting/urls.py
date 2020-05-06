@@ -55,6 +55,12 @@ urlpatterns = [
     path('home/test1/', home.views.test1, name='test1'),
     path('home/testGraph/', home.views.testGraph, name='testGraph'),
 
+    path('home/post/', home.views.post_list, name='post_list'),
+    url(r'^detail/(?P<post_id>[0-9]+)/$', home.views.post_detail, name='post_detail'),
+    #url(r'^detail/', home.views.post_detail, name='post_detail'),
+    url(r'^search/$', home.views.post_search, name='post_search'),
+    url(r'^list/ajax/$', home.views.post_list_ajax, name='post_list_ajax')
+
     #########################################################################
 
 ]
