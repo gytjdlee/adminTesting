@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ajax 추가 부분 -->
+{% if accounts %}
+    << 결과란 >>
+    <table class="table table-bordered table-sm table-hover">
+        <tr class="bg-dark text-white">
+            <th class="rounded-left">ID</th>
+            <th>생성일</th>
+            <th>요청자</th>
+            <th>서버</th>
+            <th>아이디</th>
+            <th>호스트</th>
+            <th>권한</th>
+            <th>DB</th>
+            <th>TABLE</th>
+            <th class="rounded-right">URL</th>
+        </tr>
+        {% for account in accounts %}
+
+        <tr data-toggle="modal" data-target="#myModal"
+            data-id="{{ account.id }}"
+            data-account_create_dt="{{ account.account_create_dt|date:'Y/m/d H:i:s' }}"
+            data-account_update_dt="{{ account.account_update_dt|date:'Y/m/d H:i:s' }}"
+            data-account_end_dt="{{ account.account_end_dt|date:'Y/m/d H:i:s' }}"
+            data-account_requestor="{{ account.account_requestor }}"
+            data-account_svr="{{ account.account_svr }}"
+            data-account_user="{{ account.account_user }}"
+            data-account_devteam="{{ account.account_devteam}}"
+            data-account_host="{{ account.account_host }}"
+            data-account_pass="{{ account.account_pass }}"
+            data-account_hash="{{ account.account_hash }}"
+            data-account_grant="{{ account.account_grant }}"
+            data-account_grant_with="{{ account.account_grant_with }}"
+            data-account_db="{{ account.account_db }}"
+            data-account_table="{{ account.account_table }}"
+            data-account_info="{{ account.account_info}}"
+            data-account_sql="{{ account.account_sql }}"
+            data-account_url="{{ account.account_url }}"
+            data-account_note="{{ account.account_note }}"
+            data-account_del_yn="{{ account.account_del_yn }}"
+            data-account_del_dt="{{ account.account_del_dt }}"
+            data-account_del_reason="{{ account.account_del_reason }}"
+            data-account_del_note="{{ account.account_del_note }}" style = "cursor:pointer;">
+            <td style = "width: 10%;">{{ account.id }}</td>
+            <td style = "width: 10%;">{{ account.account_create_dt|date:'Y/m/d H:i:s' }}</td>
+            <td style = "width: 8%;">{{ account.account_requestor}}</td>
+            <td style = "width: 8%;">{{ account.account_svr }}</td>
+            <td style = "width: 8%;">{{ account.account_user }}</td>
+            <td style = "width: 10%;">{{ account.account_host }}</td>
+            <td style = "width: 20%;">{{ account.account_grant }}</td>
+            <td style = "width: 8%;">{{ account.account_db }}</td>
+            <td style = "width: 8%;">{{ account.account_table }}</td>
+            <td style = "width: 10%;">{{ account.account_url }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endif %}
+
+</body>
+</html>

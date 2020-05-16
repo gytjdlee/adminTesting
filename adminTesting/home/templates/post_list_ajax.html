@@ -5,38 +5,70 @@
     <title>Title</title>
 </head>
 <body>
-<!--
-{% if post_list %}
 
-{% for post in post_list %}
-
-<div class="col-xs-12 col-sm-6">
-<h2>{{ post.title }}</h2>
-<p>{{ post.content | truncatewords:"10" }}</p>
-<p><a class="btn btn-default" href="{% url 'post_detail' post.id %}" role="button">View details »</a></p>
-</div>
-{% endfor %}
-
-{% else %}
-<p>No Data</p>
-{% endif %}
--->
-
-{% if post_list %}
-    <table class="small table table-sm table-hover">
-        {% for post in post_list %}
-        <tr class="">
-            <td style = "width: 10%;">{{ post.id}}</td>
-            <td style = "width: 20%;">{{ post.title }}</td>
-            <td style = "width: 20%;">{{ post.content | truncatewords:"50" }}</td>
-            <td style = "width: 10%;">{{ post.read }}</td>
-            <td style = "width: 10%;">{{ post.likes }}</td>
-            <td style = "width: 15%;">{{ post.updated_date|date:'Y/m/d H:i:s' }}</td>
-            <td style = "width: 15%;">{{ post.created_date|date:'Y/m/d H:i:s' }}</td>
+<!-- ajax 추가 부분 -->
+    << 총 <span class="badge badge-dark">{{ total_count }}</span> 건의 데이터 >>
+    <table class="table table-bordered table-sm table-hover">
+        <tr class="bg-dark text-white">
+            <th style = "width: 10%;">id</th>
+            <th style = "width: 20%;">title</th>
+            <th style = "width: 20%;">content</th>
+            <th style = "width: 10%;">read</th>
+            <th style = "width: 10%;">likes</th>
+            <th style = "width: 15%;">updated_date</th>
+            <th style = "width: 15%;">created_date</th>
         </tr>
-        {% endfor %}
+        {% if post_list %}
+            {% for post in post_list %}
+            <tr class="">
+                <td style = "width: 10%;">{{ post.id}}</td>
+                <td style = "width: 20%;">{{ post.title }}</td>
+                <td style = "width: 20%;">{{ post.content | truncatewords:"50" }}</td>
+                <td style = "width: 10%;">{{ post.read }}</td>
+                <td style = "width: 10%;">{{ post.likes }}</td>
+                <td style = "width: 15%;">{{ post.updated_date|date:'Y/m/d H:i:s' }}</td>
+                <td style = "width: 15%;">{{ post.created_date|date:'Y/m/d H:i:s' }}</td>
+            </tr>
+            {% endfor %}
+        {% endif %}
     </table>
+
+<!-- 페이지 스크롤 이벤트가 작동하지 않을 경우 클릭 -->
+{% if callmorepostFlag == 'true' %}
+    <button id="callmorepost" type="button" class="btn btn-primary btn-sm btn-block">더 보기</button>
 {% endif %}
 
 </body>
+<script>
+
+    var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
+
+    $('#callmorepost').click(function(){
+        var page = parseInt($("#page").val())+1;
+        callMorePostAjax(page);
+        $("#page").val(parseInt(page)+1);
+    });
+
+    function callMorePostAjax(page) {
+        var title = $("#title").val();
+        var content = $("#content").val();
+
+        $.ajax( {
+        type : 'POST',
+        url: "{% url 'post_list_ajax' %}",
+        data: {
+        'title': title,
+        'content': content,
+        'page': page,
+        'csrfmiddlewaretoken': token
+        },
+        success: addMorePostAjax,
+        dataType: 'html'
+        });
+    }
+
+    function addMorePostAjax(data, textStatus, jqXHR) {
+        $('#post_list_ajax').html(data);
+    }
+</script>
 </html>

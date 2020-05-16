@@ -9,7 +9,7 @@
 <body>
     {% block content %}
     <!-- 검색란 -->
-    <div class="query_menu my-1 p-1 border rounded small">
+    <div class="query_menu my-1 p-1 border rounded small" style="font-size: 12px;">
         << 검색란 >>
         <table class="table table-sm text-center" style="table-layout: fixed">
         <tr class="bg-dark text-white">
@@ -31,7 +31,7 @@
             {% csrf_token %}
 
             <td class="">
-                <input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" placeholder="">
+                <input class="form-control form-control-sm" id="account_requestor" name="account_requestor"  type="text" placeholder="">
             </td>
             <td class="">
                 <input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" placeholder="">
@@ -67,7 +67,7 @@
     </div>
 
     <!-- 입력란 -->
-    <div class="query_menu my-1 p-1 border rounded small">
+    <div class="query_menu my-1 p-1 border rounded small" style="font-size: 12px;">
         << 입력란 >>
         <table class="table table-sm text-center" style="table-layout: fixed">
         <tr class="bg-dark text-white">
@@ -148,12 +148,12 @@
     </div>
 
     <!-- 결과란 --> <br>
-    <div class="board small">
-        << 결과란 >>
-
-        <table class="table table-sm table-hover">
+	<div class="board small" id="account_list_ajax" style="font-size: 12px;">
+		<< 결과란 >>
+		<table class="table table-bordered table-sm table-hover">
             <tr class="bg-dark text-white">
-                <th class="rounded-left">생성일</th>
+                <th class="rounded-left">ID</th>
+				<th>생성일</th>
                 <th>요청자</th>
                 <th>서버</th>
                 <th>아이디</th>
@@ -189,6 +189,7 @@
 			    data-account_del_dt="{{ account.account_del_dt }}"
 			    data-account_del_reason="{{ account.account_del_reason }}"
 			    data-account_del_note="{{ account.account_del_note }}" style = "cursor:pointer;">
+				<td style = "width: 10%;">{{ account.id }}</td>
                 <td style = "width: 10%;">{{ account.account_create_dt|date:'Y/m/d H:i:s' }}</td>
                 <td style = "width: 8%;">{{ account.account_requestor}}</td>
                 <td style = "width: 8%;">{{ account.account_svr }}</td>
@@ -196,15 +197,21 @@
                 <td style = "width: 10%;">{{ account.account_host }}</td>
                 <td style = "width: 20%;">{{ account.account_grant }}</td>
                 <td style = "width: 8%;">{{ account.account_db }}</td>
-                <td style = "width: 18%;">{{ account.account_table }}</td>
+                <td style = "width: 8%;">{{ account.account_table }}</td>
                 <td style = "width: 10%;">{{ account.account_url }}</td>
             </tr>
             {% endfor %}
         </table>
     </div>
 
+	<!-- 페이지 정보를 입력할 곳-->
+	<input id="page" type="hidden" value="2">
+
+ 	<!-- 페이지 스크롤 이벤트가 작동하지 않을 경우 클릭 -->
+	<button id="morelist" type="button" class="btn btn-primary btn-sm btn-block">더 보기</button>
 
     <!-- Page Navy -->
+	<!--
 	<table>
 	<td>
 		<nav aria-label="Page navigation example">
@@ -229,7 +236,6 @@
 		<div class="form-group">
 		<select class="form-control form-control-sm" id="selectbox" name="selectbox" onchange='location.href="?pagelist=" + this.value'>
 
-			<!-- this.value -->
 			{% if pagelist == 15 %}
 				<option value="15" selected>15개</option>
 				<option value="20">20개</option>
@@ -247,16 +253,15 @@
 				<option value="20">20개</option>
 				<option value="30">30개</option>
 			{% endif %}
-			<!--
+
 			<option value="10" {% if pagelist == 10 %} selected {% endif %}>10개</option>
 			<option value="20" {% if pagelist == 20 %} selected {% endif %}>20개</option>
 			<option value="30" {% if pagelist == 30 %} selected {% endif %}>30개</option>
-			-->
 		</select>
   		</div>
 	</td>
 	</table>
-
+	-->
 
     <!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -384,7 +389,7 @@
 									<td style="width: 38%"><input class="form-control form-control-sm" id="account_update_dt" name="account_update_dt" type="text" readonly></td>
 								</tr>
 								<tr>
-									<td class="bg-dark text-white align-middle">만료일</td>
+									<td class="bg-dark text-white align-middle" >만료일</td>
 									<td><input class="form-control form-control-sm" id="account_end_dt" name="account_end_dt" type="text"></td>
 									<td class="bg-dark text-white align-middle">요청자명</td>
 									<td><input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text"></td>
@@ -496,31 +501,6 @@
 		var account_del_reason = button.data('account_del_reason');
 		var account_del_note = button.data('account_del_note');
 
-        var modal = $('#selectTab')
-		modal.find('#id').val(id);
-		modal.find('#account_create_dt').val(account_create_dt);
-		modal.find('#account_update_dt').val(account_update_dt);
-		modal.find('#account_end_dt').val(account_end_dt);
-	    modal.find('#account_requestor').val(account_requestor);
-		modal.find('#account_svr').val(account_svr);
-		modal.find('#account_user').val(account_user);
-		modal.find('#account_devteam').val(account_devteam);
-		modal.find('#account_host').val(account_host);
-		modal.find('#account_pass').val(account_pass);
-		modal.find('#account_hash').val(account_hash);
-		modal.find('#account_grant').val(account_grant);
-		modal.find('#account_grant_with').val(account_grant_with);
-		modal.find('#account_db').val(account_db);
-		modal.find('#account_table').val(account_table);
-		modal.find('#account_info').val(account_info);
-		modal.find('#account_sql').val(account_sql);
-		modal.find('#account_url').val(account_url);
-		modal.find('#account_note').val(account_note);
-		modal.find('#account_del_yn').val(account_del_yn);
-		modal.find('#account_del_dt').val(account_del_dt);
-		modal.find('#account_del_reason').val(account_del_reason);
-		modal.find('#account_del_note').val(account_del_note);
-
         var modal = $('#deleteTab')
 		modal.find('#id').val(id);
 		modal.find('#account_create_dt').val(account_create_dt);
@@ -572,6 +552,50 @@
 		modal.find('#account_del_note').val(account_del_note);
     })
     </script>
+
+	<!-- account list ajax script -->
+	<script>
+		var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
+
+		function searchSuccess(data, textStatus, jqXHR) {
+			$('#search_result_ajax').html(data);
+		}
+
+		$('#morelist').click(function(){
+			var page = $("#page").val();
+			callMoreListAjax(page);
+			$("#page").val(parseInt(page)+1);
+		});
+
+		$(window).scroll(function(){
+			var scrollHeight = $(window).scrollTop() + $(window).height();
+			var documentHeight = $(document).height();
+
+			if (scrollHeight + 100 >= documentHeight){
+				var page = $("#page").val();
+				callMoreListAjax(page);
+				$("#page").val(parseInt(page)+1);
+			}
+		});
+
+		function callMoreListAjax(page) {
+			$.ajax( {
+			type : 'POST',
+			url: "{% url 'account_select_ajax' %}",
+			data: {
+			'page': page,
+			'csrfmiddlewaretoken': token
+			},
+			success: addMoreAccountAjax,
+			dataType: 'html'
+			});
+		}
+
+		function addMoreAccountAjax(data, textStatus, jqXHR) {
+			$('#account_list_ajax').html(data);
+		}
+	</script>
+
 
     {% endblock %}
 </body>

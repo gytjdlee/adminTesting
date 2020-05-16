@@ -22,7 +22,6 @@ def get_key():
     return key
 
 
-
 #Account
 
 def account(request):
@@ -57,7 +56,7 @@ def account(request):
         pagelist = request.GET.get('pagelist')
 
         if pagelist is None:
-            pagelist = 15
+            pagelist = 1000
 
         #print(pagelist)
         paginator = Paginator(account_list, pagelist)
@@ -124,7 +123,7 @@ def account_insert(request):
     else:
         form = AccountForm()
 
-    return render(request, 'adminAccount.html', {'form': form})
+    return render(request, 'adminAccount_Insert.html', {'form': form})
 
 
 def account_update(request):
@@ -185,7 +184,7 @@ def account_delete(request):
     return render(request, 'adminAccount.html', {'form': form})
 
 
-def account_fast_select(request):
+def account_select_fast(request):
     if request.method == 'POST':
         account_user = request.POST['account_user']
         #print("input val : " + account_user)
@@ -194,7 +193,7 @@ def account_fast_select(request):
             account_del_yn = 'N'  # 계정 삭제여부
         ).order_by('-id')
 
-        paginator = Paginator(account_list, 10)
+        paginator = Paginator(account_list, 1000)
         page = request.GET.get('page')
         accounts = paginator.get_page(page)
         context = {'accounts': accounts}
@@ -203,12 +202,39 @@ def account_fast_select(request):
     else:
         #account_list = Account.objects.all().order_by('-id')
         account_list = Account.objects.filter(account_del_yn='N').order_by('-id')
-        paginator = Paginator(account_list, 10)
+        paginator = Paginator(account_list, 1000)
         page = request.GET.get('page')
         accounts = paginator.get_page(page)
         context = {'accounts' : accounts}
         return render(request, 'adminAccount.html', context)
 
+
+def account_select_ajax(request):
+    account_list = Account.objects.all().order_by('-id')
+    #page = int(request.POST.get('page'))
+    page = int(request.POST['page'])
+    print("page : " + str(page))
+
+    paginator = Paginator(account_list, page * 15)
+    paginator_max = Paginator(account_list, 15)
+    morelist_alax_flag = 'true'
+
+    try:
+        if int(page) > paginator_max.num_pages: # 마지막 페이지 멈춤 구현
+            account_list = Account.objects.filter(id=30000000)
+            accounts = paginator.get_page(1)
+            morelist_alax_flag = 'false'
+        else:
+            accounts = paginator.get_page(1)
+        ##ccounts = paginator.get_page(1)
+
+    except PageNotAnInteger:
+        accounts = paginator.get_page(1)
+    except EmptyPage:
+        accounts = paginator.get_page(paginator.num_pages)
+
+    context = {'accounts': accounts, 'morelist_alax_flag' : morelist_alax_flag}
+    return render(request, 'adminAccount_select_ajax.html', context)
 
 def account_selectDel(request):
     if request.method == 'POST':

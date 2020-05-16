@@ -9,7 +9,7 @@ urlpatterns = [
     #url(r'^$', login.views.login),
 
     path('jadmin/', admin.site.urls),
-    path('', login.views.loginHome),
+    path('', login.views.login),
 
     #########################################################################
     # login app
@@ -20,7 +20,7 @@ urlpatterns = [
     #########################################################################
     # home app
     #########################################################################
-    path('home/', home.views.home),
+    path('home/', home.views.home, name='home'),
 
 
     #########################################################################
@@ -28,7 +28,10 @@ urlpatterns = [
     #########################################################################
     # account manage
     path('adminAccount/', adminAccount.views.account, name='account_select'),
-    path('adminAccount/fast_select', adminAccount.views.account_fast_select, name='account_fast_select'),
+    path('adminAccount/select_fast', adminAccount.views.account_select_fast, name='account_select_fast'),
+    path('adminAccount/select_ajax', adminAccount.views.account_select_ajax, name='account_select_ajax'),
+    #url(r'^list/ajax/$', home.views.post_list_ajax, name='post_list_ajax')
+
     path('adminAccount/insert/', adminAccount.views.account_insert, name='account_insert'),
     path('adminAccount/update/', adminAccount.views.account_update, name='account_update'),
     path('adminAccount/delete/', adminAccount.views.account_delete, name='account_delete'),
@@ -41,7 +44,7 @@ urlpatterns = [
 
     # account test
     path('adminAccount/selectDel/', adminAccount.views.account_selectDel, name='account_selectDel'),
-
+    #path('adminAccount/insert/', adminAccount.views.account_selectDel, name='account_selectDel'),
 
     #########################################################################
     # test
@@ -55,11 +58,10 @@ urlpatterns = [
     path('home/test1/', home.views.test1, name='test1'),
     path('home/testGraph/', home.views.testGraph, name='testGraph'),
 
+
+    #post test
     path('home/post/', home.views.post_list, name='post_list'),
-    url(r'^detail/(?P<post_id>[0-9]+)/$', home.views.post_detail, name='post_detail'),
-    #url(r'^detail/', home.views.post_detail, name='post_detail'),
-    url(r'^search/$', home.views.post_search, name='post_search'),
-    url(r'^list/ajax/$', home.views.post_list_ajax, name='post_list_ajax')
+    path('home/post/select/', home.views.post_list_ajax, name='post_list_ajax'),
 
     #########################################################################
 

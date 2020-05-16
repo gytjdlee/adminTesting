@@ -21,10 +21,10 @@ class Account(models.Model):
 	account_requestor = models.CharField(blank=True, max_length=100, default='')      			# 요청자명      -- 이정희
 	account_devteam = models.CharField(blank=True, max_length=100, default='') 		# 요청팀      	-- 표준화
 	account_svr = models.CharField(blank=True, max_length=100, default='')          				# 호스트명      -- db-a
-	account_user = models.CharField(blank=True, max_length=50, default='')         				# 아이디        -- imsi_test
-	account_host = models.CharField(blank=True, max_length=100, default='')         				# 허용호스트    -- 127.0.0.1
-	account_pass = models.CharField(blank=True, max_length=100, default='')           			# 패스워드      	-- Test01)! select password("Test01)!");
-	account_hash = models.CharField(blank=True, max_length=100, default='')           			# 해쉬         	-- select password("Test01)!"); -- *BB498F1B5EDFDB45CA0F6FD3FDAF0A4FE01730E5 -- 41자리
+	account_user = models.CharField(max_length=50, default='')         				# 아이디        -- imsi_test
+	account_host = models.CharField(max_length=100, default='')         				# 허용호스트    -- 127.0.0.1
+	account_pass = models.CharField(max_length=100, default='')           			# 패스워드      	-- Test01)! select password("Test01)!");
+	account_hash = models.CharField(max_length=100, default='')           			# 해쉬         	-- select password("Test01)!"); -- *BB498F1B5EDFDB45CA0F6FD3FDAF0A4FE01730E5 -- 41자리
 	account_grant = models.CharField(blank=True, max_length=100, default='')          			# 권한         	-- select, insert, update, delete
 	account_grant_with = models.CharField(blank=True, max_length=100, default='N')   # grant with  	--
 	account_db = models.CharField(blank=True, max_length=100, default='')             			# db          	-- test

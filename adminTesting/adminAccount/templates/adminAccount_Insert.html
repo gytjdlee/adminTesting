@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% extends 'base-admin.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% block content %}
+
+    <!-- 입력란 -->
+    <div class="query_menu my-1 p-1 border rounded small">
+        <button class="btn btn-outline-danger btn-sm" onclick="insertBox();" type="submit">입력</button>
+        <button type="button" class="btn btn-outline-primary btn-sm btnAdd" id="btnAdd" name="btnAdd">추가</button>
+        <button type="button" class="btn btn-outline-primary btn-sm btnDel" id="btnDel" name="btnDel">삭제</button>
+
+
+        <table class="buttons table table-sm text-center table-hover" style="table-layout: fixed">
+        <form class="form-inline" action="" method="" name="insertForm">
+        {% csrf_token %}
+
+        <tr class="bg-dark text-white">
+            <!--<th class="">서버/호스트</th>-->
+            <th class="rounded-left">요청자명</th>
+            <th class="">요청팀</th>
+            <th class="">서버</th>
+            <th class="">아이디</th>
+            <th class="">호스트</th>
+            <th class="">패스워드</th>
+            <th class="">권한</th>
+            <th class="">DB</th>
+            <th class="">TABLE</th>
+            <th class="">Info</th>
+            <th class="rounded-right">URL</th>
+        </tr>
+
+        <tr class="">
+            <td class="">
+                <input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_user" name="account_user" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_host" name="account_host" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_pass" name="account_pass" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_grant" name="account_grant" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_db" name="account_db" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_table" name="account_table" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_info" name="account_info" type="text" placeholder="">
+            </td>
+            <td class="">
+                <input class="form-control form-control-sm" id="account_url" name="account_url" type="text" placeholder="">
+            </td>
+        </tr>
+
+        </form>
+        </table>
+
+            <script type="text/javascript">
+                function insertBox() {
+                    var retVal = confirm("입력하시겠습니까?");
+                    if (retVal == true ){
+                        var insertForm = document.insertForm;
+                        insertForm.action="{% url 'account_insert' %}";
+                        insertForm.method="post";
+                        insertForm.submit();
+                    }else{
+                        return;
+                    }
+                }
+            </script>
+
+            <script>
+                $(document).ready (function () {
+                    $('.btnAdd').click (function () {
+                        $('.buttons').append (
+                            '<tr class="btnDel"><td class=""><input class="form-control form-control-sm" id="account_requestor" name="account_requestor" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_devteam" name="account_devteam" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_svr" name="account_svr" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_user" name="account_user" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_host" name="account_host" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_pass" name="account_pass" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_grant" name="account_grant" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_db" name="account_db" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_table" name="account_table" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_info" name="account_info" type="text" placeholder=""></td><td class=""><input class="form-control form-control-sm" id="account_url" name="account_url" type="text" placeholder=""></td></tr>'
+                        ); // end append
+                        $('.btnDel').on('click', function () {
+                            $('.buttons').next().remove();
+                            $(this).prev().remove(); // remove the textbox
+                            $(this).next().remove(); // remove the <br>
+                            $(this).remove(); // remove the button
+                        });
+                    });
+
+                });
+            </script>
+    </div>
+
+    {% endblock %}
+</body>
+</html>

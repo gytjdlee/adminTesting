@@ -74,16 +74,20 @@
 		</li>
 	</ul>
 
-	<form class="form-inline my-2 my-lg-0" action="{% url 'account_fast_select' %}" method="post">
+	<form class="form-inline my-2 my-lg-0" action="{% url 'account_select_fast' %}" method="post">
 		{% csrf_token %}
 		<input class="form-control form-control-sm mr-sm-2" type="text" id="account_user" name="account_user" placeholder="빠른 계정검색" aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Search</button>
 	</form>
 
 	<ul class="navbar-nav px-3">
-    	<li class="nav-item text-nowrap">
-    		<a class="nav-link small" href="/">로그아웃</a>
-    	</li>
+		<li class="nav-item text-nowrap">
+			{% if user.is_authenticated %}<!-- 만약 로그인이 되어있는 상태이면 -->
+				<a class="nav-link small" href="{% url 'logout' %}">{{user.first_name}} {{user.last_name}}님 환영합니다 (로그아웃)</a>
+			{% else %} <!-- 로그인이 되어있지않다면 -->
+				<a class="nav-link small" href="{% url 'login' %}">로그인 하셔야합니다.</a>
+			{% endif %}
+		</li>
 	</ul>
 
 	</div>
@@ -94,6 +98,7 @@
   <nav class="nav nav-underline">
     <a class="nav-link small" href="{% url 'account_select' %}">조회</a>
 	<a class="nav-link small" href="{% url 'account_selectDel' %}">조회(삭제계정)</a>
+	<a class="nav-link small" href="{% url 'account_insert' %}">입력</a>
 	<a class="nav-link small" href="{% url 'account_repository_select' %}">Repository 계정관리</a>
     <a class="nav-link small" href="#">대량삭제(미구현)</a>
   </nav>
@@ -112,8 +117,9 @@
 -->
 
 	<!-- 공지사항 -->
-    <!--
+	<!--
 	<div class="my-3 p-3 bg-white rounded shadow-sm">
+
 		<h6 class="border-bottom border-gray pb-2 mb-0">최근 업데이트 / 공지사항</h6>
 
 		<div class="media text-muted pt-3">
@@ -124,15 +130,23 @@
 			</p>
 		</div>
 
-		<!--<small class="d-block text-right mt-3">
+		<small class="d-block text-right mt-3">
 			<a href="#">All updates</a>
 		</small>
+
 	</div>
 	-->
 
-	<div class="sub-main my-1 p-3 rounded shadow-sm">
-		{% block content %}
-		{% endblock %}
+	<div class="sub-main my-3 p-3 rounded shadow-sm">
+		{% if user.is_authenticated %}<!-- 만약 로그인이 되어있는 상태이면 -->
+			{% block content %}
+			{% endblock %}
+
+		{% else %} <!-- 로그인이 되어있지않다면 -->
+		<div class="alert alert-warning small" role="alert">
+			<a href="{% url 'login' %}" class="alert-link"> 인증되지 않은 사용자는 볼 수 없습니다.<br><u>(로그인 하러 가기)</u></a>
+		</div>
+		{% endif %}
 	</div>
 
 </div>

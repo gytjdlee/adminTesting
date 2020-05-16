@@ -124,54 +124,87 @@ def testGraph(request):
 # AJAX UnLimit Scrolling Test
 
 def post_list(request):
-    post_list = Post.objects.all().order_by('-id')
-    paginator = Paginator(post_list, 15)
-    page = request.POST.get('page')
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
 
-    try:
-        post_list = paginator.page(page)
-    except PageNotAnInteger:
-        post_list = paginator.page(1)
-    except EmptyPage:
-        post_list = paginator.page(paginator.num_pages)
+        #print("title : " + title)
+        #print("content : " + content )
 
-    context = {'post_list':post_list}
-    return render(request, 'post_list.html', context)
+        context = {'title': title, 'content': content}
+
+        return render(request, 'post_list.html', context)
+
+    else:
+        return render(request, 'post_list.html')
+
+
+    #try:
+    #    post_list = paginator.page(page)
+    #except PageNotAnInteger:
+    #    post_list = paginator.page(1)
+    #except EmptyPage:
+    #    post_list = paginator.page(paginator.num_pages)
+
+    #title = request.POST['title']
+    #content = request.POST['content']
+    #callmorepostFlag = 'true'
+
+    #context = {'post_list': post_list}
+    #context = {'post_list': post_list, 'callmorepostFlag': callmorepostFlag,
+    #           'title': title, 'content': content}
+    #return render(request, 'post_list_ajax.html', context)
+
 
 def post_list_ajax(request): #Ajax 로 호출하는 함수
-    post_list = Post.objects.all().order_by('-id')
-    paginator = Paginator(post_list, 15)
-    page = request.POST.get('page')
 
-    #faqs = paginator.get_page(page)
-
-    try:
-        if int(page) > paginator.num_pages:
-            post_list = Post.objects.filter(id=30000)
-        else:
-            post_list = paginator.get_page(page)
-
-    except PageNotAnInteger:
-        post_list = paginator.get_page(1)
-    except EmptyPage:
-        post_list = paginator.get_page(paginator.num_pages)
-
-    context = {'post_list':post_list}
-    return render(request, 'post_list_ajax.html', context) #Ajax 로 호출하는 템플릿은 _ajax로 표시
-
-
-def post_detail(request,post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    post.read += 1
-    post.save()
-    context = {'post':post}
-    return render(request, 'post/post_detail.html', context)
-
-def post_search(request):
     if request.method == 'POST':
-        search_text = request.POST['search_text']
+
+        title = request.POST['title']
+        content = request.POST['content']
+        callmorepostFlag = 'true'
+
+
+        post_list = Post.objects.filter(
+            title__contains=title,
+			content__contains=content
+		).order_by('-id')
+
+        page = int(request.POST.get('page'))
+
+        #print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+        #print("ajax 타이틀 : " + str(title))
+        #print("ajax 컨텐츠 : " + str(content))
+        #print("page : " + str(page))
+        total_count = post_list.count()
+        page_max = round(post_list.count() / 15)
+
+        #print("count : " + str(total_count))
+        #print("page max : " + str(page_max))
+        #print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+
+        paginator = Paginator(post_list, page * 15)
+
+        try:
+            if int(page) >= page_max : # 마지막 페이지 멈춤 구현
+                post_list = paginator.get_page(1)
+                callmorepostFlag = 'false'
+
+            else:
+                post_list = paginator.get_page(1)
+
+        except PageNotAnInteger:
+            post_list = paginator.get_page(1)
+        except EmptyPage:
+            post_list = paginator.get_page(paginator.num_pages)
+
+        context = {'post_list': post_list,
+                   'total_count': total_count, 'callmorepostFlag': callmorepostFlag,
+				   'title': title, 'content': content}
+        return render(request, 'post_list_ajax.html', context)
+
     else:
-        search_text = ''
-    post_list = Post.objects.filter(Q(title__contains = search_text) | Q(content__contains = search_text))
-    context = { 'post_list': post_list }
-    return render(request, 'post/ajax_result.html', context)
+        return render(request, 'post_list.html')
+
+
+
